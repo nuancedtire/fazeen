@@ -15,27 +15,27 @@ const featuredWork = allWork
 	<div class="max-w-[720px] mx-auto px-6">
 
 		<!-- Hero -->
-		<section class="pt-28 pb-28 md:pt-36 md:pb-32">
-			<p class="meta text-fg-subtle mb-5 tracking-wide">Dr Fazeen Nasser</p>
+		<section class="pt-14 pb-16 md:pt-24 md:pb-24">
+			<p class="meta text-fg-subtle mb-4 tracking-wide">Dr Fazeen Nasser</p>
 
-			<h1 class="display mb-8 max-w-[600px]">
+			<h1 class="display mb-7 max-w-[600px]">
 				I see patients in A&E and build the tools we wish we had.
 			</h1>
 
-			<p class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-[540px] mb-6">
+			<p class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-[540px] mb-5">
 				Emergency medicine clinician at Barts Health in London. Also a founding engineer of clinical AI
 				products — focused on the implementation work that determines whether healthcare AI actually
 				helps anyone.
 			</p>
 
-			<p class="meta text-fg-subtle mb-10">
+			<p class="meta text-fg-subtle mb-8">
 				London, UK · GMC 7741002 · Available for selected collaborations
 			</p>
 
 			<div class="flex flex-wrap gap-3">
 				<a
 					href="/work"
-					class="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-bg text-sm font-medium rounded-sm hover:opacity-90 transition-opacity"
+					class="inline-flex items-center gap-2 px-5 py-2.5 bg-fg text-bg text-sm font-semibold rounded-sm hover:opacity-80 transition-opacity"
 				>
 					See recent work
 					<svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
@@ -72,7 +72,7 @@ const featuredWork = allWork
 		</section>
 
 		<!-- Selected Work -->
-		<section class="section-divider fade-up">
+		<section class="section-divider fade-up mb-20 md:mb-32">
 			<div class="flex items-baseline justify-between mb-2">
 				<h2 class="section-label mb-0">Selected work</h2>
 				<a
@@ -89,14 +89,6 @@ const featuredWork = allWork
 			<div>
 				{featuredWork.map((entry) => <ProjectCard {entry} />)}
 			</div>
-		</section>
-
-		<!-- Writing -->
-		<section class="section-divider fade-up mb-36">
-			<h2 class="section-label">Writing</h2>
-			<p class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-[480px]">
-				Coming soon — essays on shipping clinical AI inside the NHS, the implementation gap, and what I've learned as a clinician-builder.
-			</p>
 		</section>
 
 	</div>

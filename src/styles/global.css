@@ -123,8 +123,15 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Divider sections ─── */
 .section-divider {
 	border-top: 1px solid var(--rule);
-	padding-top: 4.5rem;
-	margin-top: 4.5rem;
+	padding-top: 3rem;
+	margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+	.section-divider {
+		padding-top: 4.5rem;
+		margin-top: 4.5rem;
+	}
 }
 
 /* ─── Links ─── */

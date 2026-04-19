@@ -1,6 +1,4 @@
 ---
-import ThemeToggle from "./ThemeToggle.astro";
-
 const year = new Date().getFullYear();
 
 const navLinks = [
@@ -12,39 +10,31 @@ const navLinks = [
 ];
 ---
 
-<footer class="border-t border-rule mt-24">
-	<div
-		class="max-w-[1100px] mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8"
-	>
-		<!-- Left: name + tagline + copyright + theme toggle -->
+<footer class="border-t border-rule mt-20 md:mt-28">
+	<div class="max-w-[1100px] mx-auto px-6 py-10 md:py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+		<!-- Left: name + tagline + copyright -->
 		<div class="flex flex-col gap-3">
 			<a href="/" class="text-fg font-medium hover:text-accent transition-colors">
 				Fazeen Nasser
 			</a>
 			<p class="text-sm text-fg-muted leading-relaxed">
-				Emergency medicine clinician. Clinical AI builder.
+				Emergency medicine clinician.<br />Clinical AI builder.
 			</p>
 			<p class="meta text-fg-subtle">© {year} Dr Fazeen Nasser</p>
-			<div class="mt-1">
-				<ThemeToggle />
-			</div>
 		</div>
 
 		<!-- Middle: nav links -->
 		<nav aria-label="Footer" class="flex flex-col gap-2">
 			{
 				navLinks.map(({ href, label }) => (
-					<a
-						href={href}
-						class="text-sm text-fg-muted hover:text-fg transition-colors"
-					>
+					<a href={href} class="text-sm text-fg-muted hover:text-fg transition-colors">
 						{label}
 					</a>
 				))
 			}
 		</nav>
 
-		<!-- Right: socials + colophon -->
+		<!-- Right: socials -->
 		<div class="flex flex-col gap-3">
 			<a
 				href="mailto:me@fazeen.dev"
@@ -75,14 +65,6 @@ const navLinks = [
 			>
 				CV (PDF)
 			</a>
-			<p class="meta text-fg-subtle mt-2">
-				Built with <a
-					href="https://astro.build"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="hover:text-fg-muted transition-colors">Astro</a
-				>
-			</p>
 		</div>
 	</div>
 </footer>

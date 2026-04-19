@@ -31,16 +31,30 @@ const pageTitle = title
 <!doctype html>
 <html lang="en" data-theme="dark">
 	<head>
+		<!--
+			Runs once on initial page load to set the correct theme immediately (no FOUC).
+			Also hooks astro:before-swap so the INCOMING document gets the right data-theme
+			before it's rendered — this is what prevents the flash on navigation.
+		-->
 		<script is:inline>
 			(function () {
-				const saved = localStorage.getItem("theme");
-				if (saved === "light") {
-					document.documentElement.setAttribute("data-theme", "light");
-				} else if (!saved || saved === "system") {
-					if (window.matchMedia("(prefers-color-scheme: light)").matches) {
-						document.documentElement.setAttribute("data-theme", "light");
+				function resolveTheme() {
+					const saved = localStorage.getItem("theme") || "system";
+					if (saved === "system") {
+						return window.matchMedia("(prefers-color-scheme: dark)").matches
+							? "dark"
+							: "light";
 					}
+					return saved;
 				}
+
+				// Apply on initial load
+				document.documentElement.setAttribute("data-theme", resolveTheme());
+
+				// Patch incoming document before the swap so there is never a flash
+				document.addEventListener("astro:before-swap", function (e) {
+					e.newDocument.documentElement.setAttribute("data-theme", resolveTheme());
+				});
 			})();
 		</script>
 
@@ -53,7 +67,6 @@ const pageTitle = title
 		<meta name="author" content="Dr Fazeen Nasser" />
 		<link rel="canonical" href={canonicalURL} />
 
-		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:title" content={pageTitle} />
@@ -61,22 +74,16 @@ const pageTitle = title
 		<meta property="og:image" content={new URL(ogImage, SITE_URL).toString()} />
 		<meta property="og:site_name" content={SITE_TITLE} />
 
-		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={pageTitle} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL(ogImage, SITE_URL).toString()} />
 
-		<!-- Favicon -->
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-
-		<!-- Sitemap -->
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
-		<!-- View Transitions -->
 		<ClientRouter />
 
-		<!-- Structured data: Person -->
 		<script type="application/ld+json" is:inline>
 			{
 				"@context": "https://schema.org",
