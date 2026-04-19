@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout
+	title="Writing"
+	description="Essays on shipping clinical AI inside the NHS, the implementation gap, and what it looks like to be a clinician who builds."
+>
+	<div class="max-w-[760px] mx-auto px-6 py-24 md:py-32">
+		<header class="mb-16">
+			<h1 class="text-3xl font-semibold tracking-tight text-fg mb-4">Writing</h1>
+			<p class="text-lg text-fg-muted leading-relaxed max-w-[520px]">
+				Essays on shipping clinical AI inside the NHS, what the implementation gap actually looks like at 3am, and what I've learned as a clinician who builds. First post coming soon.
+			</p>
+		</header>
+
+		<hr />
+
+		<div class="section-rule">
+			<p class="text-fg-muted leading-relaxed">
+				<em>Want to know when I publish?</em> <a href="/contact" class="text-accent hover:underline underline-offset-4">Email me</a> and I'll add you to a small list.
+			</p>
+		</div>
+	</div>
+</BaseLayout>

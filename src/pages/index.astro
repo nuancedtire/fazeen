@@ -1,50 +1,104 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+export const prerender = true;
+
+const allWork = await getCollection("work");
+const featuredWork = allWork
+	.filter((e) => e.data.featured)
+	.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
+<BaseLayout>
+	<div class="max-w-[760px] mx-auto px-6">
+		<!-- Hero -->
+		<section class="pt-24 pb-20 md:pt-32 md:pb-24">
+			<h1 class="display mb-8">
+				I see patients in A&E<br />and build the tools<br />we wish we had.
+			</h1>
+
+			<p class="text-lg text-fg-muted leading-relaxed max-w-[560px] mb-6">
+				I'm Dr Fazeen Nasser, an emergency medicine clinician at Barts Health in London. I also build clinical AI products — independently and as a founding engineer — with a focus on the implementation work that determines whether healthcare AI actually helps anyone.
 			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
+
+			<p class="meta text-fg-subtle mb-10">
+				London, UK · GMC 7741002 · Available for selected collaborations
 			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
+
+			<div class="flex flex-wrap gap-4">
+				<a
+					href="/work"
+					class="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-bg text-sm font-medium rounded-sm hover:opacity-90 transition-opacity"
+				>
+					See recent work
+					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+						<path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</a>
+				<a
+					href="/about"
+					class="inline-flex items-center gap-2 px-5 py-2.5 border border-rule text-fg-muted text-sm rounded-sm hover:text-fg hover:border-fg-subtle transition-colors"
+				>
+					Read about me
+					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+						<path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</a>
+			</div>
+		</section>
+
+		<hr />
+
+		<!-- Currently -->
+		<section class="section-rule fade-up">
+			<h2 class="text-xs font-mono uppercase tracking-widest text-fg-subtle mb-6">Currently</h2>
+
+			<div class="space-y-4 text-fg-muted leading-relaxed">
+				<p>
+					Applying for the NHS England London <strong class="text-fg">InnovateMD 2026 Fellowship</strong> (Digital & AI stream) to deploy and evaluate <a href="/work/aide" class="text-accent hover:underline underline-offset-4">Aide</a>, a clinical guideline retrieval platform I built for Emergency Departments.
+				</p>
+				<p>
+					Founding engineer on <a href="/work/peerr" class="text-accent hover:underline underline-offset-4">Peerr.io</a> and <a href="/work/peerr" class="text-accent hover:underline underline-offset-4">Aiigent.io</a>, building AI-powered networking and workflow tools for clinicians.
+				</p>
+				<p>
+					Co-leading a departmental quality improvement project at Whipps Cross A&E on mental health pathway compliance.
+				</p>
+			</div>
+		</section>
+
+		<hr class="mt-16" />
+
+		<!-- Selected Work -->
+		<section class="section-rule fade-up">
+			<h2 class="text-xs font-mono uppercase tracking-widest text-fg-subtle mb-2">Selected work</h2>
+
+			<div class="mt-2">
+				{featuredWork.map((entry) => <ProjectCard {entry} />)}
+			</div>
+
+			<div class="mt-8">
+				<a
+					href="/work"
+					class="meta text-fg-subtle hover:text-fg transition-colors inline-flex items-center gap-1.5"
+				>
+					All projects
+					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+						<path d="M2.5 6h7M7 3.5l2.5 2.5L7 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</a>
+			</div>
+		</section>
+
+		<hr class="mt-16" />
+
+		<!-- Writing stub -->
+		<section class="section-rule fade-up mb-24">
+			<h2 class="text-xs font-mono uppercase tracking-widest text-fg-subtle mb-6">Writing</h2>
+			<p class="text-fg-muted leading-relaxed max-w-[520px]">
+				Coming soon — essays on shipping clinical AI inside the NHS, the implementation gap, and what I've learned as a clinician-builder.
 			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+		</section>
+	</div>
+</BaseLayout>

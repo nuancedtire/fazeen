@@ -1,0 +1,47 @@
+---
+import ProseLayout from "../layouts/ProseLayout.astro";
+
+export const prerender = true;
+---
+
+<ProseLayout
+	title="Contact"
+	description="Get in touch with Dr Fazeen Nasser — emergency medicine clinician and clinical AI builder."
+>
+	<h1>Contact</h1>
+
+	<p>The best way to reach me is by email.</p>
+
+	<p>
+		<a href="mailto:hello@fazeen.dev" class="text-accent font-medium">hello@fazeen.dev</a>
+	</p>
+
+	<p class="text-fg-subtle text-sm">
+		I reply to most things within a week — faster if it's about clinical AI, slower if I'm working nights.
+	</p>
+
+	<h2>Elsewhere</h2>
+
+	<ul>
+		<li><a href="https://linkedin.com/in/fazeen-nasser" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+		<li><a href="https://github.com/nuancedtire" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+		<li><a href="/Dr_Fazeen_Nasser_CV.pdf" target="_blank">CV (PDF)</a></li>
+	</ul>
+
+	<h2>I'm particularly interested in hearing from</h2>
+
+	<ul>
+		<li>Clinical teams thinking about deploying AI in their department</li>
+		<li>NHS programmes working on digital transformation</li>
+		<li>Healthcare founders building with clinicians in the loop</li>
+		<li>Fellow doctors who also build things</li>
+	</ul>
+
+	<h2>I'm probably not the right person for</h2>
+
+	<ul>
+		<li>General locum shifts</li>
+		<li>AI prompt engineering consulting unrelated to healthcare</li>
+		<li>Crypto, web3, or adjacent topics</li>
+	</ul>
+</ProseLayout>

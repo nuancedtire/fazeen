@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+export const prerender = true;
+
+const allWork = await getCollection("work");
+const sortedWork = allWork.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+	title="Work"
+	description="Clinical AI products, digital health tools, and a few things I built for myself — by Dr Fazeen Nasser."
+>
+	<div class="max-w-[760px] mx-auto px-6 py-24 md:py-32">
+		<header class="mb-16">
+			<h1 class="text-3xl font-semibold tracking-tight text-fg mb-4">Work</h1>
+			<p class="text-lg text-fg-muted leading-relaxed max-w-[520px]">
+				Things I've built, deployed, shipped, or acquired. Clinical AI, digital health products, and a few tools I made for myself.
+			</p>
+		</header>
+
+		<hr />
+
+		<div class="mt-2">
+			{sortedWork.map((entry) => <ProjectCard {entry} />)}
+		</div>
+	</div>
+</BaseLayout>

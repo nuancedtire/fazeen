@@ -1,0 +1,28 @@
+---
+title: "Aide"
+tagline: "AI-assisted clinical guideline retrieval for Emergency Departments."
+role: "Independent — proposed NHS InnovateMD 2026 fellowship project"
+period: "2025 – present"
+status: "In development"
+stack: ["React 19", "Convex", "LLM", "RAG"]
+links:
+  live: "https://aide.fazeen.dev"
+order: 1
+featured: true
+---
+
+## What it is
+
+Aide is a clinical guideline retrieval platform for Emergency Departments. It lets any clinician — consultant, registrar, locum on their first shift — ask plain-English questions and get source-cited answers from locally uploaded protocols, pathways, and logistical information. *Where is the difficult airway trolley? What's our sepsis pathway? Who do I call for a paediatric head injury?* Aide retrieves what the department has already decided is correct, and presents it in seconds. It does not triage, diagnose, or recommend treatment.
+
+## Why I built it
+
+On a busy night shift, a foundation doctor asked me which sepsis pathway to follow for a deteriorating patient — our Trust protocol or the NICE guideline they'd found online. Our local protocol was buried three clicks deep on the intranet, last updated eighteen months ago, and the search returned forty irrelevant results. We got it right because I knew where to look. A locum on their first shift would not have. This repeats daily across London. It is not a knowledge gap — it is an access gap, with real consequences for patient safety.
+
+## What I did
+
+Designed and built the platform single-handedly in React 19 with Convex as the real-time database and an LLM-based retrieval-augmented generation agent. Automated PDF and DOCX ingestion into a standardised knowledge base. Source-cited answers with confidence scoring. Built-in clinician feedback on every response. Usage analytics and full audit trail. Administrators update content through the UI — no IT tickets, no version hell.
+
+## Where it's at
+
+Deployed on production infrastructure and reviewed by my proposed fellowship supervisor. I've applied to the NHS England London InnovateMD 2026 Fellowship to take Aide through a formal clinical safety case (DCB 0129/0160), Data Protection Impact Assessment, and a rigorous mixed-methods evaluation in a London ED. The fellowship would also produce an open-access **NHS AI Implementation Playbook** — a reusable governance template for any Trust deploying clinical decision support tools.

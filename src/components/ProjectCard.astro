@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	entry: CollectionEntry<"work">;
+}
+
+const { entry } = Astro.props;
+const { title, tagline, role, period, status } = entry.data;
+
+const statusClass =
+	status.toLowerCase().includes("live") ||
+	status.toLowerCase().includes("active")
+		? "pill--live"
+		: status.toLowerCase().includes("acquired") ||
+			  status.toLowerCase().includes("place")
+			? "pill--warm"
+			: "";
+---
+
+<article class="group">
+	<a
+		href={`/work/${entry.id}`}
+		class="block py-7 border-b border-rule transition-colors hover:border-fg-subtle"
+		transition:name={`project-link-${entry.id}`}
+	>
+		<div class="flex flex-col gap-2">
+			<!-- Title row -->
+			<div class="flex items-start justify-between gap-4">
+				<h3
+					class="text-lg font-medium text-fg group-hover:text-accent transition-colors"
+					transition:name={`project-title-${entry.id}`}
+				>
+					{title}
+				</h3>
+				<span class="meta text-fg-subtle mt-0.5 shrink-0 hidden sm:block">
+					{period}
+				</span>
+			</div>
+
+			<!-- Tagline -->
+			<p class="text-sm text-fg-muted leading-relaxed">{tagline}</p>
+
+			<!-- Meta row -->
+			<div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-1">
+				<span class="meta text-fg-subtle">{role}</span>
+				<span class="meta text-fg-subtle opacity-40">·</span>
+				<span class={`pill text-xs ${statusClass}`}>{status}</span>
+			</div>
+		</div>
+	</a>
+</article>

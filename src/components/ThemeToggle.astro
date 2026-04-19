@@ -1,0 +1,72 @@
+---
+---
+
+<button
+	id="theme-toggle"
+	aria-label="Toggle light/dark theme"
+	class="p-1.5 rounded text-fg-subtle hover:text-fg transition-colors"
+	title="Toggle theme"
+>
+	<!-- Sun icon (shown in dark mode) -->
+	<svg
+		id="icon-sun"
+		width="16"
+		height="16"
+		viewBox="0 0 16 16"
+		fill="none"
+		aria-hidden="true"
+	>
+		<circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"></circle>
+		<path
+			d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.05 3.05l1.06 1.06M11.89 11.89l1.06 1.06M12.95 3.05l-1.06 1.06M4.11 11.89l-1.06 1.06"
+			stroke="currentColor"
+			stroke-width="1.5"
+			stroke-linecap="round"></path>
+	</svg>
+	<!-- Moon icon (shown in light mode) -->
+	<svg
+		id="icon-moon"
+		width="16"
+		height="16"
+		viewBox="0 0 16 16"
+		fill="none"
+		aria-hidden="true"
+		class="hidden"
+	>
+		<path
+			d="M13.5 9.5A6 6 0 0 1 6.5 2.5a6 6 0 1 0 7 7z"
+			stroke="currentColor"
+			stroke-width="1.5"
+			stroke-linecap="round"
+			stroke-linejoin="round"></path>
+	</svg>
+</button>
+
+<script>
+	function initThemeToggle() {
+		const btn = document.getElementById("theme-toggle");
+		const sun = document.getElementById("icon-sun");
+		const moon = document.getElementById("icon-moon");
+
+		function updateIcons() {
+			const isDark =
+				document.documentElement.getAttribute("data-theme") !== "light";
+			sun?.classList.toggle("hidden", !isDark);
+			moon?.classList.toggle("hidden", isDark);
+		}
+
+		updateIcons();
+
+		btn?.addEventListener("click", () => {
+			const current =
+				document.documentElement.getAttribute("data-theme") || "dark";
+			const next = current === "light" ? "dark" : "light";
+			document.documentElement.setAttribute("data-theme", next);
+			localStorage.setItem("theme", next);
+			updateIcons();
+		});
+	}
+
+	initThemeToggle();
+	document.addEventListener("astro:after-swap", initThemeToggle);
+</script>
