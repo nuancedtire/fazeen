@@ -1,0 +1,54 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import ProjectMeta from "../components/ProjectMeta.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+    entry: CollectionEntry<"work">;
+}
+
+const { entry } = Astro.props;
+const { title, tagline, role, period, status, stack, links } = entry.data;
+---
+
+<BaseLayout title={`${title} — ${tagline}`} description={tagline}>
+    <div class="max-w-5xl mx-auto px-6 pt-12 pb-16 md:pt-20 md:pb-24">
+        <!-- Back link -->
+        <a
+            href="/work"
+            class="meta text-fg-subtle hover:text-fg transition-colors inline-flex items-center gap-1.5 mb-10"
+        >
+            <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+            >
+                <path
+                    d="M8.5 2.5L4 7L8.5 11.5"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+            </svg>
+            All work
+        </a>
+
+        <!-- Project header -->
+        <header class="mb-10">
+            <h1
+                class="text-[1.875rem] font-semibold tracking-tight text-fg mb-3 leading-snug"
+                transition:name={`project-title-${entry.id}`}
+            >
+                {title}
+            </h1>
+            <p class="text-[1.0625rem] text-fg-muted mb-6 mt-2">{tagline}</p>
+            <ProjectMeta {role} {period} {status} {stack} {links} />
+        </header>
+
+        <article class="prose">
+            <slot />
+        </article>
+    </div>
+</BaseLayout>

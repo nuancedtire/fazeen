@@ -1,50 +1,143 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+export const prerender = true;
+
+const allWork = await getCollection("work");
+const featuredWork = allWork
+    .filter((e) => e.data.featured)
+    .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout>
+    <div class="max-w-5xl mx-auto px-6">
+        <!-- Hero -->
+        <section class="pt-14 pb-16 md:pt-24 md:pb-24">
+            <p class="meta text-fg-subtle mb-4 tracking-wide">
+                Dr Fazeen Nasser
+            </p>
+
+            <h1 class="display mb-7 max-w-4xl">
+                I see patients in A&E and build the tools we wish we had.
+            </h1>
+
+            <p
+                class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-3xl mb-5 mt-3"
+            >
+                Emergency medicine clinician at Whipps Cross Hospital in London.
+                Also a founding engineer of clinical AI products — focused on
+                the implementation work that determines whether healthcare AI
+                actually helps anyone.
+            </p>
+
+            <p class="meta text-fg-subtle mb-8">
+                London, UK · GMC 7741002 · Available for selected collaborations
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+                <a href="/work" class="btn-primary">
+                    See recent work
+                    <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 13 13"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M3 6.5h7M8 4l2.5 2.5L8 9"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+                <a href="/about" class="btn-secondary">
+                    About me
+                    <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 13 13"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M3 6.5h7M8 4l2.5 2.5L8 9"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- Currently -->
+        <section class="section-divider fade-up">
+            <h2 class="section-label">Currently</h2>
+
+            <div class="space-y-5">
+                <p class="text-[1.0625rem] text-fg-muted leading-[1.8]">
+                    Applying for the NHS England London <strong
+                        class="text-fg font-medium"
+                        >InnovateMD 2026 Fellowship</strong
+                    > (Digital & AI stream) to deploy and evaluate <a
+                        href="/work/aide"
+                        class="text-accent hover:text-fg transition-colors"
+                        >Aide</a
+                    >, a clinical guideline retrieval platform I built for
+                    Emergency Departments.
+                </p>
+                <p class="text-[1.0625rem] text-fg-muted leading-[1.8]">
+                    Founding engineer on <a
+                        href="/work/peerr"
+                        class="text-accent hover:text-fg transition-colors"
+                        >Peerr.io</a
+                    > and <a
+                        href="/work/peerr"
+                        class="text-accent hover:text-fg transition-colors"
+                        >Aiigent.io</a
+                    >, building AI-powered networking and workflow tools for
+                    clinicians.
+                </p>
+                <p class="text-[1.0625rem] text-fg-muted leading-[1.8]">
+                    Co-leading a departmental quality improvement project at
+                    Whipps Cross A&E on mental health pathway compliance.
+                </p>
+            </div>
+        </section>
+
+        <!-- Selected Work -->
+        <section class="section-divider fade-up mb-20 md:mb-32">
+            <div class="flex items-baseline justify-between mb-2">
+                <h2 class="section-label mb-0">Selected work</h2>
+                <a
+                    href="/work"
+                    class="meta text-fg-subtle hover:text-fg transition-colors inline-flex items-center gap-1"
+                >
+                    All projects
+                    <svg
+                        width="11"
+                        height="11"
+                        viewBox="0 0 11 11"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M2 5.5h7M7 3l2 2.5L7 8"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div>
+                {featuredWork.map((entry) => <ProjectCard {entry} />)}
+            </div>
+        </section>
+    </div>
+</BaseLayout>
