@@ -25,7 +25,7 @@ const pathname = Astro.url.pathname;
 		</a>
 
 		<!-- Desktop nav -->
-		<nav aria-label="Primary" class="hidden md:flex items-center gap-1">
+		<nav aria-label="Primary" class="hidden md:flex items-center gap-0.5">
 			{
 				navLinks.map(({ href, label }) => {
 					const isActive =
@@ -35,11 +35,7 @@ const pathname = Astro.url.pathname;
 					return (
 						<a
 							href={href}
-							class={`px-3 py-1.5 text-sm rounded transition-colors ${
-								isActive
-									? "text-fg"
-									: "text-fg-muted hover:text-fg"
-							}`}
+							class={`nav-link ${isActive ? "nav-link--active" : ""}`}
 							aria-current={isActive ? "page" : undefined}
 						>
 							{label}
