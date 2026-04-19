@@ -12,93 +12,92 @@ const featuredWork = allWork
 ---
 
 <BaseLayout>
-	<div class="max-w-[760px] mx-auto px-6">
+	<div class="max-w-[720px] mx-auto px-6">
+
 		<!-- Hero -->
-		<section class="pt-24 pb-20 md:pt-32 md:pb-24">
-			<h1 class="display mb-8">
-				I see patients in A&E<br />and build the tools<br />we wish we had.
+		<section class="pt-28 pb-28 md:pt-36 md:pb-32">
+			<p class="meta text-fg-subtle mb-5 tracking-wide">Dr Fazeen Nasser</p>
+
+			<h1 class="display mb-8 max-w-[600px]">
+				I see patients in A&E and build the tools we wish we had.
 			</h1>
 
-			<p class="text-lg text-fg-muted leading-relaxed max-w-[560px] mb-6">
-				I'm Dr Fazeen Nasser, an emergency medicine clinician at Barts Health in London. I also build clinical AI products — independently and as a founding engineer — with a focus on the implementation work that determines whether healthcare AI actually helps anyone.
+			<p class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-[540px] mb-6">
+				Emergency medicine clinician at Barts Health in London. Also a founding engineer of clinical AI
+				products — focused on the implementation work that determines whether healthcare AI actually
+				helps anyone.
 			</p>
 
 			<p class="meta text-fg-subtle mb-10">
 				London, UK · GMC 7741002 · Available for selected collaborations
 			</p>
 
-			<div class="flex flex-wrap gap-4">
+			<div class="flex flex-wrap gap-3">
 				<a
 					href="/work"
 					class="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-bg text-sm font-medium rounded-sm hover:opacity-90 transition-opacity"
 				>
 					See recent work
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-						<path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+					<svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+						<path d="M3 6.5h7M8 4l2.5 2.5L8 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 					</svg>
 				</a>
 				<a
 					href="/about"
 					class="inline-flex items-center gap-2 px-5 py-2.5 border border-rule text-fg-muted text-sm rounded-sm hover:text-fg hover:border-fg-subtle transition-colors"
 				>
-					Read about me
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-						<path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+					About me
+					<svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+						<path d="M3 6.5h7M8 4l2.5 2.5L8 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 					</svg>
 				</a>
 			</div>
 		</section>
 
-		<hr />
-
 		<!-- Currently -->
-		<section class="section-rule fade-up">
-			<h2 class="text-xs font-mono uppercase tracking-widest text-fg-subtle mb-6">Currently</h2>
+		<section class="section-divider fade-up">
+			<h2 class="section-label">Currently</h2>
 
-			<div class="space-y-4 text-fg-muted leading-relaxed">
-				<p>
-					Applying for the NHS England London <strong class="text-fg">InnovateMD 2026 Fellowship</strong> (Digital & AI stream) to deploy and evaluate <a href="/work/aide" class="text-accent hover:underline underline-offset-4">Aide</a>, a clinical guideline retrieval platform I built for Emergency Departments.
+			<div class="space-y-5">
+				<p class="text-[1.0625rem] text-fg-muted leading-[1.8]">
+					Applying for the NHS England London <strong class="text-fg font-medium">InnovateMD 2026 Fellowship</strong> (Digital & AI stream) to deploy and evaluate <a href="/work/aide" class="text-accent hover:text-fg transition-colors">Aide</a>, a clinical guideline retrieval platform I built for Emergency Departments.
 				</p>
-				<p>
-					Founding engineer on <a href="/work/peerr" class="text-accent hover:underline underline-offset-4">Peerr.io</a> and <a href="/work/peerr" class="text-accent hover:underline underline-offset-4">Aiigent.io</a>, building AI-powered networking and workflow tools for clinicians.
+				<p class="text-[1.0625rem] text-fg-muted leading-[1.8]">
+					Founding engineer on <a href="/work/peerr" class="text-accent hover:text-fg transition-colors">Peerr.io</a> and <a href="/work/peerr" class="text-accent hover:text-fg transition-colors">Aiigent.io</a>, building AI-powered networking and workflow tools for clinicians.
 				</p>
-				<p>
+				<p class="text-[1.0625rem] text-fg-muted leading-[1.8]">
 					Co-leading a departmental quality improvement project at Whipps Cross A&E on mental health pathway compliance.
 				</p>
 			</div>
 		</section>
 
-		<hr class="mt-16" />
-
 		<!-- Selected Work -->
-		<section class="section-rule fade-up">
-			<h2 class="text-xs font-mono uppercase tracking-widest text-fg-subtle mb-2">Selected work</h2>
-
-			<div class="mt-2">
-				{featuredWork.map((entry) => <ProjectCard {entry} />)}
-			</div>
-
-			<div class="mt-8">
+		<section class="section-divider fade-up">
+			<div class="flex items-baseline justify-between mb-2">
+				<h2 class="section-label mb-0">Selected work</h2>
 				<a
 					href="/work"
-					class="meta text-fg-subtle hover:text-fg transition-colors inline-flex items-center gap-1.5"
+					class="meta text-fg-subtle hover:text-fg transition-colors inline-flex items-center gap-1"
 				>
 					All projects
-					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-						<path d="M2.5 6h7M7 3.5l2.5 2.5L7 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+					<svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+						<path d="M2 5.5h7M7 3l2 2.5L7 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 					</svg>
 				</a>
 			</div>
+
+			<div>
+				{featuredWork.map((entry) => <ProjectCard {entry} />)}
+			</div>
 		</section>
 
-		<hr class="mt-16" />
-
-		<!-- Writing stub -->
-		<section class="section-rule fade-up mb-24">
-			<h2 class="text-xs font-mono uppercase tracking-widest text-fg-subtle mb-6">Writing</h2>
-			<p class="text-fg-muted leading-relaxed max-w-[520px]">
+		<!-- Writing -->
+		<section class="section-divider fade-up mb-36">
+			<h2 class="section-label">Writing</h2>
+			<p class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-[480px]">
 				Coming soon — essays on shipping clinical AI inside the NHS, the implementation gap, and what I've learned as a clinician-builder.
 			</p>
 		</section>
+
 	</div>
 </BaseLayout>

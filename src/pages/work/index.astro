@@ -15,16 +15,14 @@ const sortedWork = allWork.sort((a, b) => a.data.order - b.data.order);
 >
 	<div class="max-w-[760px] mx-auto px-6 py-24 md:py-32">
 		<header class="mb-16">
-			<h1 class="text-3xl font-semibold tracking-tight text-fg mb-4">Work</h1>
-			<p class="text-lg text-fg-muted leading-relaxed max-w-[520px]">
+			<h1 class="text-[2rem] font-semibold tracking-tight text-fg mb-4">Work</h1>
+			<p class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-[500px]">
 				Things I've built, deployed, shipped, or acquired. Clinical AI, digital health products, and a few tools I made for myself.
 			</p>
 		</header>
 
-		<hr />
-
-		<div class="mt-2">
-			{sortedWork.map((entry) => <ProjectCard {entry} />)}
+		<div>
+			{sortedWork.map((entry, i) => <ProjectCard {entry} index={i + 1} showIndex />)}
 		</div>
 	</div>
 </BaseLayout>
