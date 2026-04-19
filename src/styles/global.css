@@ -378,3 +378,86 @@ hr {
 @media (prefers-reduced-motion: reduce) {
 	.fade-up { animation: none; }
 }
+
+/* ─── Animated border CTA button ─── */
+@property --btn-angle {
+	syntax: '<angle>';
+	initial-value: 0deg;
+	inherits: false;
+}
+
+@keyframes btn-border-spin {
+	to { --btn-angle: 360deg; }
+}
+
+.btn-primary {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.625rem 1.375rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--fg);
+	background: var(--bg-elev);
+	border-radius: 8px;
+	text-decoration: none;
+	isolation: isolate;
+	transition: color 0.2s;
+	white-space: nowrap;
+}
+
+.btn-primary:hover {
+	color: var(--accent);
+}
+
+.btn-primary::before {
+	content: '';
+	position: absolute;
+	inset: -1.5px;
+	border-radius: 9.5px;
+	background: conic-gradient(
+		from var(--btn-angle),
+		transparent 0%,
+		transparent 52%,
+		var(--accent-warm) 68%,
+		var(--accent) 82%,
+		transparent 100%
+	);
+	z-index: -1;
+	animation: btn-border-spin 3s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.btn-primary::before {
+		animation: none;
+		background: var(--rule);
+		inset: 0;
+		border-radius: 8px;
+		padding: 1px;
+		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+	}
+}
+
+.btn-secondary {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.625rem 1.375rem;
+	font-size: 0.875rem;
+	color: var(--fg-muted);
+	text-decoration: none;
+	border-radius: 8px;
+	border: 1px solid var(--rule);
+	background: transparent;
+	transition: color 0.2s, border-color 0.2s;
+	white-space: nowrap;
+}
+
+.btn-secondary:hover {
+	color: var(--fg);
+	border-color: var(--fg-subtle);
+}
