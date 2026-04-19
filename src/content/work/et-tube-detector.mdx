@@ -1,6 +1,6 @@
 ---
 title: "ET Tube Placement Detector"
-tagline: "A deep-learning tool for verifying neonatal endotracheal tube placement."
+tagline: "A Mask R-CNN prototype for neonatal endotracheal tube verification on chest X-rays."
 role: "Independent"
 period: "2019"
 status: "Prototype"
@@ -9,8 +9,40 @@ featured: false
 ---
 ## What it was
 
-A deep-learning model trained to verify correct endotracheal tube placement on neonatal chest X-rays — one of the most common and highest-stakes procedures in neonatology. Built as a proof-of-concept while I was in the early stages of my career.
+This was a prototype Mask R-CNN system built to detect endotracheal tubes on neonatal chest X-rays and flag whether placement looked correct. It was one of the earliest clinical AI projects built as a proof of concept, before the difference between a model demo and a clinically safe workflow was fully understood.
 
-## What I learned
+## What we built
 
-The gap between a model that works on a curated dataset and a model that would be safe in a NICU is enormous. This is the project that first taught me that the interesting problems in clinical AI are implementation problems.
+The project used a Mask R-CNN style pipeline to localize the tube and produce image-level detections on chest radiographs. The report also includes the supporting architecture diagrams we used to reason about the workflow, including a vision-to-network concept figure and a Region Proposal Network diagram.
+
+## Model view
+
+These figures show the technical side of the project: how the detection pipeline was framed and how the regions of interest were proposed before classification.
+
+![Model architecture diagram](/65.png)
+
+![Region Proposal Network diagram](/90.png)
+
+## X-ray outputs
+
+These images show the kind of radiographs the prototype was meant to inspect, including correctly placed tubes, model overlays, and harder cases with dense annotations.
+
+**Clean ET tube detection with a confidence label.**
+
+![ET tube detection output](/96.png)
+
+**Chest X-ray with highlighted regions of interest.**
+
+![Chest X-ray with ROI](/63.png)
+
+**Grid of model outputs across multiple radiographs.**
+
+![Grid of model outputs](/83.png)
+
+## What it taught me
+
+The main lesson was that clinical AI is not just about detection accuracy. The harder problems are consistency, workflow fit, and deciding when a model is good enough to be trusted in a high-stakes setting.
+
+## Why it is deprecated
+
+This project is now presented as a historical prototype rather than an active tool. It reflects an early stage in the work: useful for learning, important to show, but not something to position as production-ready clinical software.

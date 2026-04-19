@@ -128,11 +128,85 @@ const pathname = Astro.url.pathname;
 	const iconMenu = document.getElementById("icon-menu");
 	const iconClose = document.getElementById("icon-close");
 
-	toggle?.addEventListener("click", () => {
-		const isOpen = !menu?.classList.contains("hidden");
-		menu?.classList.toggle("hidden");
-		iconMenu?.classList.toggle("hidden", !isOpen ? true : false);
-		iconClose?.classList.toggle("hidden", !isOpen ? false : true);
-		toggle.setAttribute("aria-expanded", String(!isOpen));
+	// Store the element that had focus before opening
+	let lastFocusedElement: HTMLElement | null = null;
+
+	function getFocusableElements(): HTMLElement[] {
+		if (!menu) return [];
+		return Array.from(
+			menu.querySelectorAll(
+				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
+			)
+		).filter((el) => {
+			const element = el as HTMLElement;
+			return element.tabIndex >= 0 && !element.hasAttribute('disabled');
+		}) as HTMLElement[];
+	}
+
+	function trapFocus(e: KeyboardEvent) {
+		if (!menu || menu.classList.contains('hidden')) return;
+		
+		const focusableElements = getFocusableElements();
+		if (focusableElements.length === 0) return;
+		
+		const firstElement = focusableElements[0];
+		const lastElement = focusableElements[focusableElements.length - 1];
+		
+		if (e.key === 'Tab') {
+			if (e.shiftKey && document.activeElement === firstElement) {
+				e.preventDefault();
+				lastElement.focus();
+			} else if (!e.shiftKey && document.activeElement === lastElement) {
+				e.preventDefault();
+				firstElement.focus();
+			}
+		}
+	}
+
+	function handleEscape(e: KeyboardEvent) {
+		if (e.key === 'Escape' && menu && !menu.classList.contains('hidden')) {
+			closeMenu();
+		}
+	}
+
+	function openMenu() {
+		if (!menu || !toggle) return;
+		lastFocusedElement = document.activeElement as HTMLElement;
+		menu.classList.remove('hidden');
+		iconMenu?.classList.add('hidden');
+		iconClose?.classList.remove('hidden');
+		toggle.setAttribute('aria-expanded', 'true');
+		toggle.setAttribute('aria-label', 'Close navigation menu');
+		
+		// Focus first menu item
+		const firstLink = menu.querySelector('a');
+		firstLink?.focus();
+		
+		document.addEventListener('keydown', trapFocus);
+		document.addEventListener('keydown', handleEscape);
+	}
+
+	function closeMenu() {
+		if (!menu || !toggle) return;
+		menu.classList.add('hidden');
+		iconMenu?.classList.remove('hidden');
+		iconClose?.classList.add('hidden');
+		toggle.setAttribute('aria-expanded', 'false');
+		toggle.setAttribute('aria-label', 'Open navigation menu');
+		
+		document.removeEventListener('keydown', trapFocus);
+		document.removeEventListener('keydown', handleEscape);
+		
+		// Return focus to toggle button
+		lastFocusedElement?.focus();
+	}
+
+	toggle?.addEventListener('click', () => {
+		const isOpen = !menu?.classList.contains('hidden');
+		if (isOpen) {
+			closeMenu();
+		} else {
+			openMenu();
+		}
 	});
 </script>

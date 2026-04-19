@@ -77,19 +77,44 @@ body {
 /* ─── Skip to content ─── */
 .skip-to-content {
     position: absolute;
-    top: -100%;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+.skip-to-content:focus {
+    position: absolute;
+    top: 0;
     left: 0;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
     background: var(--accent);
     color: var(--bg);
-    padding: 0.5rem 1rem;
     font-size: 0.875rem;
     font-weight: 600;
     z-index: 9999;
     text-decoration: none;
     border-radius: 0 0 4px 0;
 }
-.skip-to-content:focus {
-    top: 0;
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ─── Typography ─── */
@@ -239,13 +264,13 @@ hr {
 }
 
 .prose a {
-    color: var(--accent);
+    color: var(--accent-warm);
     text-decoration: underline;
     text-underline-offset: 3px;
-    text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    text-decoration-color: color-mix(in srgb, var(--accent-warm) 40%, transparent);
 }
 .prose a:hover {
-    text-decoration-color: var(--accent);
+    text-decoration-color: var(--accent-warm);
 }
 
 .prose strong {
