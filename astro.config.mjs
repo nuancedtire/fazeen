@@ -16,6 +16,9 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
 	},
+	experimental: {
+		fonts: true,
+	},
 	fonts: [
 		{
 			provider: fontProviders.fontsource(),
