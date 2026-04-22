@@ -117,44 +117,6 @@ const pageTitle = title
 		</body>
 </html>
 
-<style is:global>
-	/* 
-	 * Elements with view-transition-name must be visible for proper capture.
-	 * Astro adds inline style="view-transition-name: X" to elements with transition:name directive.
-	 */
-	[style*="view-transition-name"] {
-		opacity: 1 !important;
-		visibility: visible !important;
-	}
-	
-	/* View transition styles for morphing elements - smooth easing */
-	::view-transition-group(*) {
-		animation-duration: 0.35s;
-		animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-	}
-	
-	::view-transition-old(*),
-	::view-transition-new(*) {
-		animation-duration: 0.35s;
-		animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-	}
-	
-	/* Default page content transition - faster for root */
-	::view-transition-old(root),
-	::view-transition-new(root) {
-		animation-duration: 0.25s;
-		animation-timing-function: ease-out;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		::view-transition-group(*),
-		::view-transition-old(*),
-		::view-transition-new(*) {
-			animation: none !important;
-		}
-	}
-</style>
-
 <script>
 	/**
 	 * Intersection Observer-based scroll animations
@@ -248,21 +210,4 @@ const pageTitle = title
 
 	// astro:page-load fires on initial load AND after every view transition
 	document.addEventListener('astro:page-load', init);
-	
-	// Before view transition capture, make all elements with view-transition-name visible
-	// This ensures the View Transition API can properly snapshot them
-	document.addEventListener('astro:before-preparation', () => {
-		// Find all elements with view-transition-name style and make their parents visible
-		const transitionElements = document.querySelectorAll('[style*="view-transition-name"]');
-		transitionElements.forEach(el => {
-			// Make the element visible
-			(el as HTMLElement).style.opacity = '1';
-			
-			// Find and make parent animation containers visible
-			const parent = el.closest('.fade-up, .fade-up-hero, .slide-in-left, .section-enter');
-			if (parent) {
-				parent.classList.add('is-visible');
-			}
-		});
-	});
 </script>
