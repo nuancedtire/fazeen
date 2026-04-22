@@ -56,8 +56,15 @@ html {
     background-color: var(--bg);
     color: var(--fg);
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection color */
+::selection {
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
+    color: var(--fg);
 }
 
 body {
@@ -170,6 +177,18 @@ a {
     text-decoration: none;
 }
 
+/* Inline accent links with animated underline */
+a.text-accent {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+}
+
+a.text-accent:hover {
+    text-decoration-color: currentColor;
+}
+
 /* ─── Horizontal rules ─── */
 hr {
     border: none;
@@ -214,6 +233,13 @@ hr {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+    
+    .project-card:hover,
+    .btn-primary:active,
+    .btn-secondary:active,
+    .nav-link:active {
+        transform: none !important;
     }
 }
 
@@ -421,13 +447,17 @@ hr {
     font-size: 0.875rem;
     color: var(--fg-muted);
     border-radius: 6px;
-    transition: color 0.15s, background-color 0.15s;
+    transition: color 0.15s, background-color 0.15s, transform 0.1s;
     text-decoration: none;
 }
 
 .nav-link:hover {
     color: var(--fg);
     background-color: var(--bg-elev);
+}
+
+.nav-link:active {
+    transform: scale(0.97);
 }
 
 .nav-link--active {
@@ -452,6 +482,11 @@ hr {
     position: relative;
     --mouse-x: 50%;
     --mouse-y: 50%;
+    transition: transform 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
 }
 
 /* Mouse-tracking gradient glow */
@@ -465,7 +500,7 @@ hr {
         transparent 50%
     );
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.3s ease;
     pointer-events: none;
 }
 
@@ -481,7 +516,7 @@ hr {
     border-radius: 0;
     box-shadow: inset 0 1px 0 0 color-mix(in srgb, var(--accent-warm) 15%, transparent);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease;
     pointer-events: none;
 }
 
@@ -504,13 +539,25 @@ hr {
     border: 1px solid var(--rule);
     border-radius: 8px;
     text-decoration: none;
-    transition: color 0.2s, border-color 0.2s;
+    transition: color 0.2s, border-color 0.2s, transform 0.15s;
     white-space: nowrap;
 }
 
 .btn-primary:hover {
     color: var(--fg);
     border-color: color-mix(in srgb, var(--accent) 30%, var(--rule));
+}
+
+.btn-primary:hover svg {
+    transform: translateX(2px);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-primary svg {
+    transition: transform 0.2s;
 }
 
 .btn-secondary {
@@ -523,12 +570,24 @@ hr {
     text-decoration: none;
     border-radius: 8px;
     background: transparent;
-    transition: color 0.2s;
+    transition: color 0.2s, transform 0.15s;
     white-space: nowrap;
 }
 
 .btn-secondary:hover {
     color: var(--fg);
+}
+
+.btn-secondary:hover svg {
+    transform: translateX(2px);
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
+.btn-secondary svg {
+    transition: transform 0.2s;
 }
 
 
