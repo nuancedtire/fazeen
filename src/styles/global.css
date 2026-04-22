@@ -1,26 +1,6 @@
 @import "tailwindcss";
-@import "@fontsource-variable/inter";
-@import "@fontsource/instrument-serif/400.css";
-@import "@fontsource/instrument-serif/400-italic.css";
-@import "@fontsource-variable/jetbrains-mono";
 
 @plugin "@tailwindcss/typography";
-
-/* Prevent FOUT - use block to hide text briefly until font loads */
-@font-face {
-    font-family: "Inter Variable";
-    font-display: block;
-}
-
-@font-face {
-    font-family: "Instrument Serif";
-    font-display: block;
-}
-
-@font-face {
-    font-family: "JetBrains Mono Variable";
-    font-display: swap;
-}
 
 /* ─── Design Tokens ─── */
 :root {
@@ -55,9 +35,9 @@
     --color-accent-warm: var(--accent-warm);
     --color-rule: var(--rule);
 
-    --font-sans: "Inter Variable", ui-sans-serif, system-ui;
-    --font-serif: "Instrument Serif", ui-serif, Georgia;
-    --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui;
+    --font-serif: var(--font-instrument-serif), ui-serif, Georgia;
+    --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
 /* ─── Base ─── */
