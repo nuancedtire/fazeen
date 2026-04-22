@@ -15,29 +15,26 @@ const featuredWork = allWork
     <div class="max-w-5xl mx-auto px-6">
         <!-- Hero -->
         <section class="pt-14 pb-16 md:pt-24 md:pb-24">
-            <p class="meta text-fg-subtle mb-4 tracking-wide fade-up" data-stagger="1">
+            <p class="meta text-fg-subtle mb-4 tracking-wide">
                 Dr Fazeen Nasser
             </p>
 
-            <h1 class="display mb-7 max-w-4xl fade-up-hero" data-stagger="2">
+            <h1 class="display mb-7 max-w-4xl">
                 I see patients in A&E and build the tools we wish we had.
             </h1>
 
-            <p
-                class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-3xl mb-5 mt-3 fade-up"
-                data-stagger="3"
-            >
+            <p class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-3xl mb-5 mt-3">
                 Emergency medicine clinician at Whipps Cross Hospital in London.
                 Also a founding engineer of clinical AI products — focused on
                 the implementation work that determines whether healthcare AI
                 actually helps anyone.
             </p>
 
-            <p class="meta text-fg-subtle mb-8 fade-up" data-stagger="4">
+            <p class="meta text-fg-subtle mb-8">
                 London, UK · GMC 7741002 · Available for selected collaborations
             </p>
 
-            <div class="flex flex-wrap gap-3 fade-up" data-stagger="5">
+            <div class="flex flex-wrap gap-3">
                 <a href="/work" class="btn-primary">
                     See recent work
                     <svg
@@ -76,34 +73,34 @@ const featuredWork = allWork
         </section>
 
         <!-- Currently -->
-        <section class="section-divider section-enter">
+        <section class="section-divider">
             <h2 class="section-label">Currently</h2>
 
-            <div class="space-y-5" data-stagger-children>
-                <p class="text-[1.0625rem] text-fg-muted leading-[1.8] fade-up">
+            <div class="space-y-5">
+                <p class="text-[1.0625rem] text-fg-muted leading-[1.8]">
                     Applying for the NHS England London <strong
                         class="text-fg font-medium"
                         >InnovateMD 2026 Fellowship</strong
                     > (Digital & AI stream) to deploy and evaluate <a
                         href="/work/aide"
-                        class="text-accent hover:text-fg transition-colors link-reveal"
+                        class="text-accent hover:text-fg transition-colors"
                         >Aide</a
                     >, a clinical guideline retrieval platform I built for
                     Emergency Departments.
                 </p>
-                <p class="text-[1.0625rem] text-fg-muted leading-[1.8] fade-up">
+                <p class="text-[1.0625rem] text-fg-muted leading-[1.8]">
                     Founding engineer on <a
                         href="/work/peerr"
-                        class="text-accent hover:text-fg transition-colors link-reveal"
+                        class="text-accent hover:text-fg transition-colors"
                         >Peerr.io</a
                     > and <a
                         href="/work/peerr"
-                        class="text-accent hover:text-fg transition-colors link-reveal"
+                        class="text-accent hover:text-fg transition-colors"
                         >Aiigent.io</a
                     >, building AI-powered networking and workflow tools for
                     clinicians.
                 </p>
-                <p class="text-[1.0625rem] text-fg-muted leading-[1.8] fade-up">
+                <p class="text-[1.0625rem] text-fg-muted leading-[1.8]">
                     Co-leading a departmental quality improvement project at
                     Whipps Cross A&E on mental health pathway compliance.
                 </p>
@@ -111,12 +108,12 @@ const featuredWork = allWork
         </section>
 
         <!-- Selected Work -->
-        <section class="section-divider section-enter mb-20 md:mb-32">
+        <section class="section-divider mb-20 md:mb-32">
             <div class="flex items-baseline justify-between mb-2">
                 <h2 class="section-label mb-0">Selected work</h2>
                 <a
                     href="/work"
-                    class="meta text-fg-subtle hover:text-fg transition-colors inline-flex items-center gap-1 link-reveal"
+                    class="meta text-fg-subtle hover:text-fg transition-colors inline-flex items-center gap-1"
                 >
                     All projects
                     <svg
@@ -136,7 +133,7 @@ const featuredWork = allWork
                 </a>
             </div>
 
-            <div data-stagger-children>
+            <div>
                 {featuredWork.map((entry) => <ProjectCard {entry} />)}
             </div>
         </section>

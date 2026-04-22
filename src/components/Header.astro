@@ -92,11 +92,11 @@ const pathname = Astro.url.pathname;
 	<!-- Mobile menu -->
 	<div
 		id="mobile-menu"
-		class="hidden md:hidden border-t border-rule overflow-hidden"
+		class="hidden md:hidden border-t border-rule"
 		role="dialog"
 		aria-label="Navigation menu"
 	>
-		<nav id="mobile-nav" class="flex flex-col px-6 py-4 gap-1">
+		<nav class="flex flex-col px-6 py-4 gap-1">
 			{
 				navLinks.map(({ href, label }) => {
 					const isActive =
@@ -106,7 +106,7 @@ const pathname = Astro.url.pathname;
 					return (
 						<a
 							href={href}
-							class={`mobile-nav-link px-3 py-2.5 text-sm rounded ${
+							class={`px-3 py-2.5 text-sm rounded transition-colors ${
 								isActive
 									? "text-fg bg-bg-elev"
 									: "text-fg-muted hover:text-fg hover:bg-bg-elev"
@@ -125,110 +125,21 @@ const pathname = Astro.url.pathname;
 <script>
 	const toggle = document.getElementById("mobile-menu-toggle");
 	const menu = document.getElementById("mobile-menu");
-	const mobileNav = document.getElementById("mobile-nav");
 	const iconMenu = document.getElementById("icon-menu");
 	const iconClose = document.getElementById("icon-close");
-
-	// Store the element that had focus before opening
-	let lastFocusedElement: HTMLElement | null = null;
-
-	function getFocusableElements(): HTMLElement[] {
-		if (!menu) return [];
-		return Array.from(
-			menu.querySelectorAll(
-				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-			)
-		).filter((el) => {
-			const element = el as HTMLElement;
-			return element.tabIndex >= 0 && !element.hasAttribute('disabled');
-		}) as HTMLElement[];
-	}
-
-	function trapFocus(e: KeyboardEvent) {
-		if (!menu || menu.classList.contains('hidden')) return;
-		
-		const focusableElements = getFocusableElements();
-		if (focusableElements.length === 0) return;
-		
-		const firstElement = focusableElements[0];
-		const lastElement = focusableElements[focusableElements.length - 1];
-		
-		if (e.key === 'Tab') {
-			if (e.shiftKey && document.activeElement === firstElement) {
-				e.preventDefault();
-				lastElement.focus();
-			} else if (!e.shiftKey && document.activeElement === lastElement) {
-				e.preventDefault();
-				firstElement.focus();
-			}
-		}
-	}
-
-	function handleEscape(e: KeyboardEvent) {
-		if (e.key === 'Escape' && menu && !menu.classList.contains('hidden')) {
-			closeMenu();
-		}
-	}
-
-	function openMenu() {
-		if (!menu || !toggle) return;
-		lastFocusedElement = document.activeElement as HTMLElement;
-		
-		// Show menu with animation
-		menu.classList.remove('hidden');
-		menu.classList.add('mobile-menu-enter');
-		menu.classList.remove('mobile-menu-exit');
-		
-		// Add class to parent for link stagger animation
-		mobileNav?.classList.add('mobile-menu-open');
-		
-		iconMenu?.classList.add('hidden');
-		iconClose?.classList.remove('hidden');
-		toggle.setAttribute('aria-expanded', 'true');
-		toggle.setAttribute('aria-label', 'Close navigation menu');
-		
-		// Focus first menu item after animation
-		setTimeout(() => {
-			const firstLink = menu.querySelector('a');
-			firstLink?.focus();
-		}, 100);
-		
-		document.addEventListener('keydown', trapFocus);
-		document.addEventListener('keydown', handleEscape);
-	}
-
-	function closeMenu() {
-		if (!menu || !toggle) return;
-		
-		// Animate out
-		menu.classList.add('mobile-menu-exit');
-		menu.classList.remove('mobile-menu-enter');
-		mobileNav?.classList.remove('mobile-menu-open');
-		
-		// Hide after animation
-		setTimeout(() => {
-			menu.classList.add('hidden');
-			menu.classList.remove('mobile-menu-exit');
-		}, 200);
-		
-		iconMenu?.classList.remove('hidden');
-		iconClose?.classList.add('hidden');
-		toggle.setAttribute('aria-expanded', 'false');
-		toggle.setAttribute('aria-label', 'Open navigation menu');
-		
-		document.removeEventListener('keydown', trapFocus);
-		document.removeEventListener('keydown', handleEscape);
-		
-		// Return focus to toggle button
-		lastFocusedElement?.focus();
-	}
 
 	toggle?.addEventListener('click', () => {
 		const isOpen = !menu?.classList.contains('hidden');
 		if (isOpen) {
-			closeMenu();
+			menu?.classList.add('hidden');
+			iconMenu?.classList.remove('hidden');
+			iconClose?.classList.add('hidden');
+			toggle.setAttribute('aria-expanded', 'false');
 		} else {
-			openMenu();
+			menu?.classList.remove('hidden');
+			iconMenu?.classList.add('hidden');
+			iconClose?.classList.remove('hidden');
+			toggle.setAttribute('aria-expanded', 'true');
 		}
 	});
 </script>
