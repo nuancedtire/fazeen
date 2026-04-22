@@ -112,8 +112,100 @@ const pageTitle = title
 			<slot />
 		</main>
 		<Footer />
-		
-		<!-- Load animations script -->
-		<script src="../scripts/animations.ts"></script>
-	</body>
+		</body>
 </html>
+
+<script>
+	/**
+	 * Intersection Observer-based scroll animations
+	 * Compatible with Astro View Transitions
+	 */
+
+	const ANIMATION_SELECTORS = [
+		'.fade-up',
+		'.fade-up-hero', 
+		'.slide-in-left',
+		'.section-enter'
+	];
+
+	const prefersReducedMotion = (): boolean => {
+		return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	};
+
+	let observer: IntersectionObserver | null = null;
+
+	function initScrollAnimations(): void {
+		if (prefersReducedMotion()) {
+			ANIMATION_SELECTORS.forEach(selector => {
+				document.querySelectorAll(selector).forEach(el => {
+					el.classList.add('is-visible');
+				});
+			});
+			return;
+		}
+
+		if (observer) {
+			observer.disconnect();
+		}
+
+		observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('is-visible');
+					observer?.unobserve(entry.target);
+				}
+			});
+		}, {
+			root: null,
+			rootMargin: '0px 0px -50px 0px',
+			threshold: 0.1
+		});
+
+		ANIMATION_SELECTORS.forEach(selector => {
+			document.querySelectorAll(selector).forEach(el => {
+				if (!el.classList.contains('is-visible')) {
+					observer?.observe(el);
+				}
+			});
+		});
+	}
+
+	function initMouseTracking(): void {
+		const cards = document.querySelectorAll<HTMLElement>('.project-card');
+		
+		cards.forEach(card => {
+			card.addEventListener('mousemove', (e: MouseEvent) => {
+				const rect = card.getBoundingClientRect();
+				const x = e.clientX - rect.left;
+				const y = e.clientY - rect.top;
+				card.style.setProperty('--mouse-x', `${x}px`);
+				card.style.setProperty('--mouse-y', `${y}px`);
+			});
+			
+			card.addEventListener('mouseleave', () => {
+				card.style.setProperty('--mouse-x', '50%');
+				card.style.setProperty('--mouse-y', '50%');
+			});
+		});
+	}
+
+	function initStaggerAnimations(): void {
+		const staggerContainers = document.querySelectorAll('[data-stagger-children]');
+		
+		staggerContainers.forEach(container => {
+			const children = container.querySelectorAll('.fade-up, .slide-in-left');
+			children.forEach((child, index) => {
+				child.setAttribute('data-stagger', String(Math.min(index + 1, 6)));
+			});
+		});
+	}
+
+	function init(): void {
+		initStaggerAnimations();
+		initScrollAnimations();
+		initMouseTracking();
+	}
+
+	// astro:page-load fires on initial load AND after every view transition
+	document.addEventListener('astro:page-load', init);
+</script>
