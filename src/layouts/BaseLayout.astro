@@ -6,8 +6,20 @@ import "@fontsource-variable/jetbrains-mono";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { ClientRouter } from "astro:transitions";
+import { ClientRouter, fade } from "astro:transitions";
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from "../consts";
+
+// Custom page transition animation
+const pageTransition = {
+	forwards: {
+		old: { name: 'page-fade-out', duration: '0.15s', easing: 'ease-out', fillMode: 'forwards' },
+		new: { name: 'page-fade-in', duration: '0.25s', easing: 'ease-out', fillMode: 'forwards' }
+	},
+	backwards: {
+		old: { name: 'page-fade-out', duration: '0.15s', easing: 'ease-out', fillMode: 'forwards' },
+		new: { name: 'page-fade-in', duration: '0.25s', easing: 'ease-out', fillMode: 'forwards' }
+	}
+};
 
 interface Props {
 	title?: string;
@@ -29,7 +41,7 @@ const pageTitle = title
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" transition:animate={pageTransition}>
 	<head>
 		<!--
 			Runs once on initial page load to set the correct theme immediately (no FOUC).
@@ -101,19 +113,59 @@ const pageTitle = title
 		</script>
 	</head>
 	<body class="bg-bg text-fg">
-		<!-- Ambient background effects -->
-		<div class="ambient-orb" aria-hidden="true"></div>
-		<div class="ambient-orb-warm" aria-hidden="true"></div>
-		<div class="grain-overlay" aria-hidden="true"></div>
+		<!-- Ambient background effects - persist across page transitions -->
+		<div class="ambient-orb" aria-hidden="true" transition:persist></div>
+		<div class="ambient-orb-warm" aria-hidden="true" transition:persist></div>
+		<div class="grain-overlay" aria-hidden="true" transition:persist></div>
 		
 		<a href="#main-content" class="skip-to-content">Skip to content</a>
 		<Header />
-		<main id="main-content">
+		<main id="main-content" transition:animate="fade">
 			<slot />
 		</main>
 		<Footer />
 		</body>
 </html>
+
+<style is:global>
+	/* Page transition keyframes for Astro View Transitions */
+	@keyframes page-fade-out {
+		from {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+		}
+		to {
+			opacity: 0;
+			transform: translate3d(0, -8px, 0);
+		}
+	}
+
+	@keyframes page-fade-in {
+		from {
+			opacity: 0;
+			transform: translate3d(0, 8px, 0);
+		}
+		to {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		@keyframes page-fade-out {
+			from, to {
+				opacity: 1;
+				transform: none;
+			}
+		}
+		@keyframes page-fade-in {
+			from, to {
+				opacity: 1;
+				transform: none;
+			}
+		}
+	}
+</style>
 
 <script>
 	/**

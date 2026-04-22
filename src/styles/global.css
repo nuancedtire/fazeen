@@ -710,44 +710,6 @@ hr {
     }
 }
 
-/* ─── View Transitions ─── */
-::view-transition-old(root) {
-    animation: view-fade-out 0.15s ease-out forwards;
-}
-
-::view-transition-new(root) {
-    animation: view-fade-in 0.25s ease-out forwards;
-}
-
-@keyframes view-fade-out {
-    from {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-    to {
-        opacity: 0;
-        transform: translate3d(0, -8px, 0);
-    }
-}
-
-@keyframes view-fade-in {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 8px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
-        animation: none;
-    }
-}
-
 /* ─── Ambient background orb ─── */
 .ambient-orb {
     position: fixed;
