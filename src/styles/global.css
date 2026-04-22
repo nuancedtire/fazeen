@@ -6,6 +6,22 @@
 
 @plugin "@tailwindcss/typography";
 
+/* Prevent FOUT - use block to hide text briefly until font loads */
+@font-face {
+    font-family: "Inter Variable";
+    font-display: block;
+}
+
+@font-face {
+    font-family: "Instrument Serif";
+    font-display: block;
+}
+
+@font-face {
+    font-family: "JetBrains Mono Variable";
+    font-display: swap;
+}
+
 /* ─── Design Tokens ─── */
 :root {
     --bg: #0b0e14;
