@@ -15,18 +15,19 @@ const sortedWork = allWork.sort((a, b) => a.data.order - b.data.order);
 >
     <div class="max-w-5xl mx-auto px-6 pt-12 pb-16 md:pt-20 md:pb-24">
         <header class="mb-12">
-            <h1 class="text-[2rem] font-semibold tracking-tight text-fg">
+            <h1 class="text-[2rem] font-semibold tracking-tight text-fg fade-up" data-stagger="1">
                 Work
             </h1>
             <p
-                class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-3xl mt-2"
+                class="text-[1.0625rem] text-fg-muted leading-[1.8] max-w-3xl mt-2 fade-up"
+                data-stagger="2"
             >
-                Things I've built, deployed, shipped, or acquired. Clinical AI,
+                Things I&apos;ve built, deployed, shipped, or acquired. Clinical AI,
                 digital health products, and a few tools I made for myself.
             </p>
         </header>
 
-        <div>
+        <div data-stagger-children>
             {
                 sortedWork.map((entry, i) => (
                     <ProjectCard {entry} index={i + 1} showIndex />

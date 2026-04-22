@@ -4,19 +4,19 @@
 <button
 	id="theme-toggle"
 	aria-label="Switch theme"
-	class="p-1.5 rounded text-fg-subtle hover:text-fg transition-colors"
+	class="relative p-2 rounded-lg text-fg-subtle hover:text-fg hover:bg-bg-elev transition-all duration-200 active:scale-95"
 >
 	<!-- Sun: shown in light mode -->
-	<svg id="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="hidden">
+	<svg id="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="hidden theme-toggle-icon">
 		<circle cx="8" cy="8" r="2.75" stroke="currentColor" stroke-width="1.5"/>
 		<path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.07 1.07M11.53 11.53l1.07 1.07M12.6 3.4l-1.07 1.07M4.47 11.53l-1.07 1.07" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 	</svg>
 	<!-- Moon: shown in dark mode -->
-	<svg id="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="hidden">
+	<svg id="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="hidden theme-toggle-icon">
 		<path d="M13.5 9.5A6 6 0 0 1 6.5 2.5a6 6 0 1 0 7 7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 	</svg>
 	<!-- Monitor: shown in system/auto mode -->
-	<svg id="icon-system" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+	<svg id="icon-system" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="theme-toggle-icon">
 		<rect x="1.5" y="2.5" width="13" height="8.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
 		<path d="M5 14h6M8 11v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 	</svg>

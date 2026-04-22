@@ -101,11 +101,19 @@ const pageTitle = title
 		</script>
 	</head>
 	<body class="bg-bg text-fg">
+		<!-- Ambient background effects -->
+		<div class="ambient-orb" aria-hidden="true"></div>
+		<div class="ambient-orb-warm" aria-hidden="true"></div>
+		<div class="grain-overlay" aria-hidden="true"></div>
+		
 		<a href="#main-content" class="skip-to-content">Skip to content</a>
 		<Header />
 		<main id="main-content">
 			<slot />
 		</main>
 		<Footer />
+		
+		<!-- Load animations script -->
+		<script src="../scripts/animations.ts"></script>
 	</body>
 </html>

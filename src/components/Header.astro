@@ -92,11 +92,11 @@ const pathname = Astro.url.pathname;
 	<!-- Mobile menu -->
 	<div
 		id="mobile-menu"
-		class="hidden md:hidden border-t border-rule"
+		class="hidden md:hidden border-t border-rule overflow-hidden"
 		role="dialog"
 		aria-label="Navigation menu"
 	>
-		<nav class="flex flex-col px-6 py-4 gap-1">
+		<nav id="mobile-nav" class="flex flex-col px-6 py-4 gap-1">
 			{
 				navLinks.map(({ href, label }) => {
 					const isActive =
@@ -106,7 +106,7 @@ const pathname = Astro.url.pathname;
 					return (
 						<a
 							href={href}
-							class={`px-3 py-2.5 text-sm rounded transition-colors ${
+							class={`mobile-nav-link px-3 py-2.5 text-sm rounded ${
 								isActive
 									? "text-fg bg-bg-elev"
 									: "text-fg-muted hover:text-fg hover:bg-bg-elev"
@@ -125,6 +125,7 @@ const pathname = Astro.url.pathname;
 <script>
 	const toggle = document.getElementById("mobile-menu-toggle");
 	const menu = document.getElementById("mobile-menu");
+	const mobileNav = document.getElementById("mobile-nav");
 	const iconMenu = document.getElementById("icon-menu");
 	const iconClose = document.getElementById("icon-close");
 
@@ -172,15 +173,25 @@ const pathname = Astro.url.pathname;
 	function openMenu() {
 		if (!menu || !toggle) return;
 		lastFocusedElement = document.activeElement as HTMLElement;
+		
+		// Show menu with animation
 		menu.classList.remove('hidden');
+		menu.classList.add('mobile-menu-enter');
+		menu.classList.remove('mobile-menu-exit');
+		
+		// Add class to parent for link stagger animation
+		mobileNav?.classList.add('mobile-menu-open');
+		
 		iconMenu?.classList.add('hidden');
 		iconClose?.classList.remove('hidden');
 		toggle.setAttribute('aria-expanded', 'true');
 		toggle.setAttribute('aria-label', 'Close navigation menu');
 		
-		// Focus first menu item
-		const firstLink = menu.querySelector('a');
-		firstLink?.focus();
+		// Focus first menu item after animation
+		setTimeout(() => {
+			const firstLink = menu.querySelector('a');
+			firstLink?.focus();
+		}, 100);
 		
 		document.addEventListener('keydown', trapFocus);
 		document.addEventListener('keydown', handleEscape);
@@ -188,7 +199,18 @@ const pathname = Astro.url.pathname;
 
 	function closeMenu() {
 		if (!menu || !toggle) return;
-		menu.classList.add('hidden');
+		
+		// Animate out
+		menu.classList.add('mobile-menu-exit');
+		menu.classList.remove('mobile-menu-enter');
+		mobileNav?.classList.remove('mobile-menu-open');
+		
+		// Hide after animation
+		setTimeout(() => {
+			menu.classList.add('hidden');
+			menu.classList.remove('mobile-menu-exit');
+		}, 200);
+		
 		iconMenu?.classList.remove('hidden');
 		iconClose?.classList.add('hidden');
 		toggle.setAttribute('aria-expanded', 'false');
