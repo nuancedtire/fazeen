@@ -551,6 +551,14 @@ hr {
     transform: translate3d(0, 0, 0);
 }
 
+/* Ensure child elements with view-transition-name are always visible */
+.fade-up [style*="view-transition-name"],
+.fade-up-hero [style*="view-transition-name"],
+.section-enter [style*="view-transition-name"],
+.slide-in-left [style*="view-transition-name"] {
+    opacity: 1 !important;
+}
+
 /* Staggered animation delays */
 [data-stagger="1"] { transition-delay: 0.05s; }
 [data-stagger="2"] { transition-delay: 0.1s; }

@@ -6,20 +6,10 @@ import "@fontsource-variable/jetbrains-mono";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { ClientRouter, fade } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from "../consts";
 
-// Custom page transition animation
-const pageTransition = {
-	forwards: {
-		old: { name: 'page-fade-out', duration: '0.15s', easing: 'ease-out', fillMode: 'forwards' },
-		new: { name: 'page-fade-in', duration: '0.25s', easing: 'ease-out', fillMode: 'forwards' }
-	},
-	backwards: {
-		old: { name: 'page-fade-out', duration: '0.15s', easing: 'ease-out', fillMode: 'forwards' },
-		new: { name: 'page-fade-in', duration: '0.25s', easing: 'ease-out', fillMode: 'forwards' }
-	}
-};
+
 
 interface Props {
 	title?: string;
@@ -41,7 +31,7 @@ const pageTitle = title
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark" transition:animate={pageTransition}>
+<html lang="en" data-theme="dark">
 	<head>
 		<!--
 			Runs once on initial page load to set the correct theme immediately (no FOUC).
@@ -120,7 +110,7 @@ const pageTitle = title
 		
 		<a href="#main-content" class="skip-to-content">Skip to content</a>
 		<Header />
-		<main id="main-content" transition:animate="fade">
+		<main id="main-content">
 			<slot />
 		</main>
 		<Footer />
@@ -128,41 +118,39 @@ const pageTitle = title
 </html>
 
 <style is:global>
-	/* Page transition keyframes for Astro View Transitions */
-	@keyframes page-fade-out {
-		from {
-			opacity: 1;
-			transform: translate3d(0, 0, 0);
-		}
-		to {
-			opacity: 0;
-			transform: translate3d(0, -8px, 0);
-		}
+	/* 
+	 * Elements with view-transition-name must be visible for proper capture.
+	 * Astro adds inline style="view-transition-name: X" to elements with transition:name directive.
+	 */
+	[style*="view-transition-name"] {
+		opacity: 1 !important;
+		visibility: visible !important;
 	}
-
-	@keyframes page-fade-in {
-		from {
-			opacity: 0;
-			transform: translate3d(0, 8px, 0);
-		}
-		to {
-			opacity: 1;
-			transform: translate3d(0, 0, 0);
-		}
+	
+	/* View transition styles for morphing elements - smooth easing */
+	::view-transition-group(*) {
+		animation-duration: 0.35s;
+		animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation-duration: 0.35s;
+		animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	
+	/* Default page content transition - faster for root */
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: 0.25s;
+		animation-timing-function: ease-out;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		@keyframes page-fade-out {
-			from, to {
-				opacity: 1;
-				transform: none;
-			}
-		}
-		@keyframes page-fade-in {
-			from, to {
-				opacity: 1;
-				transform: none;
-			}
+		::view-transition-group(*),
+		::view-transition-old(*),
+		::view-transition-new(*) {
+			animation: none !important;
 		}
 	}
 </style>
@@ -260,4 +248,21 @@ const pageTitle = title
 
 	// astro:page-load fires on initial load AND after every view transition
 	document.addEventListener('astro:page-load', init);
+	
+	// Before view transition capture, make all elements with view-transition-name visible
+	// This ensures the View Transition API can properly snapshot them
+	document.addEventListener('astro:before-preparation', () => {
+		// Find all elements with view-transition-name style and make their parents visible
+		const transitionElements = document.querySelectorAll('[style*="view-transition-name"]');
+		transitionElements.forEach(el => {
+			// Make the element visible
+			(el as HTMLElement).style.opacity = '1';
+			
+			// Find and make parent animation containers visible
+			const parent = el.closest('.fade-up, .fade-up-hero, .slide-in-left, .section-enter');
+			if (parent) {
+				parent.classList.add('is-visible');
+			}
+		});
+	});
 </script>
