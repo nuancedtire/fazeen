@@ -123,23 +123,34 @@ const pathname = Astro.url.pathname;
 </header>
 
 <script>
-	const toggle = document.getElementById("mobile-menu-toggle");
-	const menu = document.getElementById("mobile-menu");
-	const iconMenu = document.getElementById("icon-menu");
-	const iconClose = document.getElementById("icon-close");
+	function initMobileMenu() {
+		const toggle = document.getElementById("mobile-menu-toggle");
+		const menu = document.getElementById("mobile-menu");
+		const iconMenu = document.getElementById("icon-menu");
+		const iconClose = document.getElementById("icon-close");
 
-	toggle?.addEventListener('click', () => {
-		const isOpen = !menu?.classList.contains('hidden');
-		if (isOpen) {
-			menu?.classList.add('hidden');
-			iconMenu?.classList.remove('hidden');
-			iconClose?.classList.add('hidden');
-			toggle.setAttribute('aria-expanded', 'false');
-		} else {
-			menu?.classList.remove('hidden');
-			iconMenu?.classList.add('hidden');
-			iconClose?.classList.remove('hidden');
-			toggle.setAttribute('aria-expanded', 'true');
-		}
-	});
+		// Reset menu state on navigation
+		menu?.classList.add('hidden');
+		iconMenu?.classList.remove('hidden');
+		iconClose?.classList.add('hidden');
+		toggle?.setAttribute('aria-expanded', 'false');
+
+		toggle?.addEventListener('click', () => {
+			const isOpen = !menu?.classList.contains('hidden');
+			if (isOpen) {
+				menu?.classList.add('hidden');
+				iconMenu?.classList.remove('hidden');
+				iconClose?.classList.add('hidden');
+				toggle.setAttribute('aria-expanded', 'false');
+			} else {
+				menu?.classList.remove('hidden');
+				iconMenu?.classList.add('hidden');
+				iconClose?.classList.remove('hidden');
+				toggle.setAttribute('aria-expanded', 'true');
+			}
+		});
+	}
+
+	// Run on initial load and after each view transition
+	document.addEventListener('astro:page-load', initMobileMenu);
 </script>
