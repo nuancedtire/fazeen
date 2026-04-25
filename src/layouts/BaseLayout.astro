@@ -1,13 +1,12 @@
 ---
-import "@fontsource-variable/inter";
-import "@fontsource/instrument-serif/400.css";
-import "@fontsource/instrument-serif/400-italic.css";
-import "@fontsource-variable/jetbrains-mono";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { ClientRouter } from "astro:transitions";
+import { Font } from "astro:assets";
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from "../consts";
+
+
 
 interface Props {
 	title?: string;
@@ -61,6 +60,11 @@ const pageTitle = title
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
+		
+		<!-- Fonts with preload for critical fonts -->
+		<Font cssVariable="--font-inter" preload />
+		<Font cssVariable="--font-instrument-serif" preload />
+		<Font cssVariable="--font-jetbrains-mono" />
 
 		<title>{pageTitle}</title>
 		<meta name="description" content={description} />
@@ -107,5 +111,25 @@ const pageTitle = title
 			<slot />
 		</main>
 		<Footer />
-	</body>
+		</body>
 </html>
+
+<script>
+	// Simple mouse tracking for project cards
+	function initMouseTracking(): void {
+		const cards = document.querySelectorAll<HTMLElement>('.project-card');
+		cards.forEach(card => {
+			card.addEventListener('mousemove', (e: MouseEvent) => {
+				const rect = card.getBoundingClientRect();
+				card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+				card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+			});
+			card.addEventListener('mouseleave', () => {
+				card.style.setProperty('--mouse-x', '50%');
+				card.style.setProperty('--mouse-y', '50%');
+			});
+		});
+	}
+
+	document.addEventListener('astro:page-load', initMouseTracking);
+</script>

@@ -1,8 +1,4 @@
 @import "tailwindcss";
-@import "@fontsource-variable/inter";
-@import "@fontsource/instrument-serif/400.css";
-@import "@fontsource/instrument-serif/400-italic.css";
-@import "@fontsource-variable/jetbrains-mono";
 
 @plugin "@tailwindcss/typography";
 
@@ -39,9 +35,9 @@
     --color-accent-warm: var(--accent-warm);
     --color-rule: var(--rule);
 
-    --font-sans: "Inter Variable", ui-sans-serif, system-ui;
-    --font-serif: "Instrument Serif", ui-serif, Georgia;
-    --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui;
+    --font-serif: var(--font-instrument-serif), ui-serif, Georgia;
+    --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
 /* ─── Base ─── */
@@ -56,8 +52,15 @@ html {
     background-color: var(--bg);
     color: var(--fg);
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection color */
+::selection {
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
+    color: var(--fg);
 }
 
 body {
@@ -170,6 +173,18 @@ a {
     text-decoration: none;
 }
 
+/* Inline accent links with animated underline */
+a.text-accent {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+}
+
+a.text-accent:hover {
+    text-decoration-color: currentColor;
+}
+
 /* ─── Horizontal rules ─── */
 hr {
     border: none;
@@ -214,6 +229,13 @@ hr {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+    
+    .project-card:hover,
+    .btn-primary:active,
+    .btn-secondary:active,
+    .nav-link:active {
+        transform: none !important;
     }
 }
 
@@ -421,15 +443,17 @@ hr {
     font-size: 0.875rem;
     color: var(--fg-muted);
     border-radius: 6px;
-    transition:
-        color 0.15s,
-        background-color 0.15s;
+    transition: color 0.15s, background-color 0.15s, transform 0.1s;
     text-decoration: none;
 }
 
 .nav-link:hover {
     color: var(--fg);
     background-color: var(--bg-elev);
+}
+
+.nav-link:active {
+    transform: scale(0.97);
 }
 
 .nav-link--active {
@@ -452,19 +476,27 @@ hr {
 /* ─── Project card ─── */
 .project-card {
     position: relative;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    transition: transform 0.2s ease;
 }
 
+.project-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Mouse-tracking gradient glow */
 .project-card::before {
     content: "";
     position: absolute;
     inset: 0;
     background: radial-gradient(
-        500px circle at 0% 50%,
-        color-mix(in srgb, var(--accent-warm) 6%, transparent),
+        400px circle at var(--mouse-x) var(--mouse-y),
+        color-mix(in srgb, var(--accent-warm) 8%, transparent),
         transparent 50%
     );
     opacity: 0;
-    transition: opacity 0.35s ease;
+    transition: opacity 0.3s ease;
     pointer-events: none;
 }
 
@@ -472,43 +504,26 @@ hr {
     opacity: 1;
 }
 
-/* ─── Scroll fade-in ─── */
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Subtle border glow on hover */
+.project-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 0;
+    box-shadow: inset 0 1px 0 0 color-mix(in srgb, var(--accent-warm) 15%, transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
 }
 
-.fade-up {
-    animation: fadeUp 400ms ease forwards;
+.project-card:hover::after {
+    opacity: 1;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .fade-up {
-        animation: none;
-    }
-}
+
 
 /* ─── CTA Buttons ─── */
-@keyframes btn-shimmer {
-    0% {
-        left: -110%;
-    }
-    50% {
-        left: 110%;
-    }
-    100% {
-        left: 110%;
-    }
-}
-
 .btn-primary {
-    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -520,10 +535,7 @@ hr {
     border: 1px solid var(--rule);
     border-radius: 8px;
     text-decoration: none;
-    overflow: hidden;
-    transition:
-        color 0.25s,
-        border-color 0.25s;
+    transition: color 0.2s, border-color 0.2s, transform 0.15s;
     white-space: nowrap;
 }
 
@@ -532,28 +544,16 @@ hr {
     border-color: color-mix(in srgb, var(--accent) 30%, var(--rule));
 }
 
-.btn-primary::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -110%;
-    width: 55%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        color-mix(in srgb, var(--fg) 5%, transparent),
-        transparent
-    );
-    transform: skewX(-18deg);
-    animation: btn-shimmer 6s ease-in-out infinite;
-    pointer-events: none;
+.btn-primary:hover svg {
+    transform: translateX(2px);
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .btn-primary::before {
-        display: none;
-    }
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-primary svg {
+    transition: transform 0.2s;
 }
 
 .btn-secondary {
@@ -566,10 +566,26 @@ hr {
     text-decoration: none;
     border-radius: 8px;
     background: transparent;
-    transition: color 0.25s;
+    transition: color 0.2s, transform 0.15s;
     white-space: nowrap;
 }
 
 .btn-secondary:hover {
     color: var(--fg);
 }
+
+.btn-secondary:hover svg {
+    transform: translateX(2px);
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
+.btn-secondary svg {
+    transition: transform 0.2s;
+}
+
+
+
+
