@@ -5,14 +5,18 @@ import sitemap from "@astrojs/sitemap";
 import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 
+const isVercel = !!process.env.VERCEL;
+
 export default defineConfig({
 	site: "https://fazeen.dev",
 	integrations: [mdx(), sitemap()],
-	adapter: cloudflare({
-		platformProxy: {
-			enabled: true,
-		},
-	}),
+	adapter: isVercel
+		? undefined
+		: cloudflare({
+				platformProxy: {
+					enabled: true,
+				},
+			}),
 	vite: {
 		plugins: [tailwindcss()],
 	},
