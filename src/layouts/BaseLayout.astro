@@ -18,7 +18,7 @@ interface Props {
 const {
 	title,
 	description = SITE_DESCRIPTION,
-	ogImage = "/og-default.png",
+	ogImage,
 	canonicalURL = Astro.url.href,
 } = Astro.props;
 
@@ -75,13 +75,13 @@ const pageTitle = title
 		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={new URL(ogImage, SITE_URL).toString()} />
+		{ogImage && <meta property="og:image" content={new URL(ogImage, SITE_URL).toString()} />}
 		<meta property="og:site_name" content={SITE_TITLE} />
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={pageTitle} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={new URL(ogImage, SITE_URL).toString()} />
+		{ogImage && <meta name="twitter:image" content={new URL(ogImage, SITE_URL).toString()} />}
 
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
