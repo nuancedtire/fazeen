@@ -16,32 +16,30 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
 	},
-	experimental: {
-		fonts: [
-			{
-				provider: fontProviders.fontsource(),
-				name: "Inter Variable",
-				cssVariable: "--font-inter",
-				weights: [400, 500, 600, 700],
-				styles: ["normal"],
-				fallbacks: ["sans-serif"],
-			},
-			{
-				provider: fontProviders.fontsource(),
-				name: "Instrument Serif",
-				cssVariable: "--font-instrument-serif",
-				weights: [400],
-				styles: ["normal", "italic"],
-				fallbacks: ["serif"],
-			},
-			{
-				provider: fontProviders.fontsource(),
-				name: "JetBrains Mono Variable",
-				cssVariable: "--font-jetbrains-mono",
-				weights: [400, 500],
-				styles: ["normal"],
-				fallbacks: ["monospace"],
-			},
-		],
-	},
+	fonts: [
+		{
+			provider: fontProviders.fontsource(),
+			name: "Inter",
+			cssVariable: "--font-inter",
+			weights: [400, 500, 600, 700],
+			styles: ["normal"],
+			fallbacks: ["sans-serif"],
+		},
+		{
+			provider: fontProviders.fontsource(),
+			name: "Instrument Serif",
+			cssVariable: "--font-instrument-serif",
+			weights: [400],
+			styles: ["normal", "italic"],
+			fallbacks: ["serif"],
+		},
+		{
+			provider: fontProviders.fontsource(),
+			name: "JetBrains Mono",
+			cssVariable: "--font-jetbrains-mono",
+			weights: [400, 500],
+			styles: ["normal"],
+			fallbacks: ["monospace"],
+		},
+	],
 });
