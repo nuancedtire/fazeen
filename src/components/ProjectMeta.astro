@@ -1,100 +1,100 @@
 ---
 interface Props {
-	role: string;
-	period: string;
-	status: string;
-	stack?: string[];
-	links?: { live?: string; github?: string };
+  role: string;
+  period: string;
+  status: string;
+  stack?: string[];
+  links?: { live?: string; github?: string };
 }
 
 const { role, period, status, stack, links } = Astro.props;
 
 const statusClass =
-	status.toLowerCase().includes("live") ||
-	status.toLowerCase().includes("active")
-		? "pill--live"
-		: status.toLowerCase().includes("acquired") ||
-			  status.toLowerCase().includes("place")
-			? "pill--warm"
-			: "";
+  status.toLowerCase().includes("live") ||
+  status.toLowerCase().includes("active")
+    ? "pill--live"
+    : status.toLowerCase().includes("acquired") ||
+        status.toLowerCase().includes("place")
+      ? "pill--warm"
+      : "";
 ---
 
 <div class="flex flex-col gap-3">
-	<!-- Role · Period · Status row -->
-	<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
-		<span class="meta text-fg-subtle">{role}</span>
-		<span class="meta text-fg-subtle opacity-40">·</span>
-		<span class="meta text-fg-subtle">{period}</span>
-		<span class="meta text-fg-subtle opacity-40">·</span>
-		<span class={`pill ${statusClass}`}>{status}</span>
-	</div>
+  <!-- Role · Period · Status row -->
+  <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+    <span class="meta text-fg-subtle">{role}</span>
+    <span class="meta text-fg-subtle opacity-40">·</span>
+    <span class="meta text-fg-subtle">{period}</span>
+    <span class="meta text-fg-subtle opacity-40">·</span>
+    <span class={`pill ${statusClass}`}>{status}</span>
+  </div>
 
-	<!-- Stack tags -->
-	{
-		stack && stack.length > 0 && (
-			<div class="flex flex-wrap gap-1.5">
-				{stack.map((tag) => (
-					<span class="pill">{tag}</span>
-				))}
-			</div>
-		)
-	}
+  <!-- Stack tags -->
+  {
+    stack && stack.length > 0 && (
+      <div class="flex flex-wrap gap-1.5">
+        {stack.map((tag) => (
+          <span class="pill">{tag}</span>
+        ))}
+      </div>
+    )
+  }
 
-	<!-- Links -->
-	{
-		links && (links.live || links.github) && (
-			<div class="flex gap-4">
-				{links.live && (
-					<a
-						href={links.live}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="meta text-accent hover:text-fg transition-colors inline-flex items-center gap-1"
-					>
-						Visit site
-						<svg
-							width="11"
-							height="11"
-							viewBox="0 0 11 11"
-							fill="none"
-							aria-hidden="true"
-						>
-							<path
-								d="M2 2h7v7M9 2L2 9"
-								stroke="currentColor"
-								stroke-width="1.5"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</a>
-				)}
-				{links.github && (
-					<a
-						href={links.github}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="meta text-fg-subtle hover:text-fg transition-colors inline-flex items-center gap-1"
-					>
-						GitHub
-						<svg
-							width="11"
-							height="11"
-							viewBox="0 0 11 11"
-							fill="none"
-							aria-hidden="true"
-						>
-							<path
-								d="M2 2h7v7M9 2L2 9"
-								stroke="currentColor"
-								stroke-width="1.5"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</a>
-				)}
-			</div>
-		)
-	}
+  <!-- Links -->
+  {
+    links && (links.live || links.github) && (
+      <div class="flex gap-4">
+        {links.live && (
+          <a
+            href={links.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="meta text-accent hover:text-fg transition-colors inline-flex items-center gap-1"
+          >
+            Visit site
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 11 11"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M2 2h7v7M9 2L2 9"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        )}
+        {links.github && (
+          <a
+            href={links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="meta text-fg-subtle hover:text-fg transition-colors inline-flex items-center gap-1"
+          >
+            GitHub
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 11 11"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M2 2h7v7M9 2L2 9"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        )}
+      </div>
+    )
+  }
 </div>

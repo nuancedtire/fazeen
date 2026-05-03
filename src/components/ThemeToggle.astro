@@ -1,86 +1,158 @@
 ---
+
 ---
 
 <button
-	id="theme-toggle"
-	aria-label="Switch theme"
-	class="p-2 rounded-lg text-fg-subtle hover:text-fg hover:bg-bg-elev transition-colors"
+  id="theme-toggle"
+  aria-label="Switch theme"
+  aria-describedby="theme-current"
+  class="p-2 rounded-lg text-fg-subtle hover:text-fg hover:bg-bg-elev transition-colors"
 >
-	<!-- Sun: shown in light mode -->
-	<svg id="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="hidden">
-		<circle cx="8" cy="8" r="2.75" stroke="currentColor" stroke-width="1.5"/>
-		<path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.07 1.07M11.53 11.53l1.07 1.07M12.6 3.4l-1.07 1.07M4.47 11.53l-1.07 1.07" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-	</svg>
-	<!-- Moon: shown in dark mode -->
-	<svg id="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="hidden">
-		<path d="M13.5 9.5A6 6 0 0 1 6.5 2.5a6 6 0 1 0 7 7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-	</svg>
-	<!-- Monitor: shown in system/auto mode -->
-	<svg id="icon-system" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-		<rect x="1.5" y="2.5" width="13" height="8.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
-		<path d="M5 14h6M8 11v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-	</svg>
+  <!-- Sun: shown in light mode -->
+  <svg
+    id="icon-sun"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    aria-hidden="true"
+    class="hidden"
+  >
+    <circle cx="8" cy="8" r="2.75" stroke="currentColor" stroke-width="1.5"
+    ></circle>
+    <path
+      d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.07 1.07M11.53 11.53l1.07 1.07M12.6 3.4l-1.07 1.07M4.47 11.53l-1.07 1.07"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"></path>
+  </svg>
+  <!-- Moon: shown in dark mode -->
+  <svg
+    id="icon-moon"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    aria-hidden="true"
+    class="hidden"
+  >
+    <path
+      d="M13.5 9.5A6 6 0 0 1 6.5 2.5a6 6 0 1 0 7 7z"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+  </svg>
+  <!-- Monitor: shown in system/auto mode -->
+  <svg
+    id="icon-system"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    aria-hidden="true"
+  >
+    <rect
+      x="1.5"
+      y="2.5"
+      width="13"
+      height="8.5"
+      rx="1.5"
+      stroke="currentColor"
+      stroke-width="1.5"></rect>
+    <path
+      d="M5 14h6M8 11v3"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"></path>
+  </svg>
+  <span id="theme-current" class="sr-only">Current: system preference</span>
 </button>
 
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>
+
 <script>
-	type Theme = "light" | "dark" | "system";
+  type Theme = "light" | "dark" | "system";
 
-	function getSavedTheme(): Theme {
-		return (localStorage.getItem("theme") as Theme) || "system";
-	}
+  function getSavedTheme(): Theme {
+    return (localStorage.getItem("theme") as Theme) || "system";
+  }
 
-	function applyTheme(theme: Theme) {
-		if (theme === "system") {
-			const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-			document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
-		} else {
-			document.documentElement.setAttribute("data-theme", theme);
-		}
-	}
+  function applyTheme(theme: Theme) {
+    if (theme === "system") {
+      const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.setAttribute(
+        "data-theme",
+        dark ? "dark" : "light",
+      );
+    } else {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
+  }
 
-	function updateIcons(theme: Theme) {
-		const sun = document.getElementById("icon-sun");
-		const moon = document.getElementById("icon-moon");
-		const system = document.getElementById("icon-system");
-		sun?.classList.toggle("hidden", theme !== "light");
-		moon?.classList.toggle("hidden", theme !== "dark");
-		system?.classList.toggle("hidden", theme !== "system");
+  function updateIcons(theme: Theme) {
+    const sun = document.getElementById("icon-sun");
+    const moon = document.getElementById("icon-moon");
+    const system = document.getElementById("icon-system");
+    sun?.classList.toggle("hidden", theme !== "light");
+    moon?.classList.toggle("hidden", theme !== "dark");
+    system?.classList.toggle("hidden", theme !== "system");
 
-		const btn = document.getElementById("theme-toggle");
-		const labels: Record<Theme, string> = {
-			light: "Switch to dark mode",
-			dark: "Switch to auto (system) mode",
-			system: "Switch to light mode",
-		};
-		btn?.setAttribute("aria-label", labels[theme]);
-	}
+    const btn = document.getElementById("theme-toggle");
+    const labels: Record<Theme, string> = {
+      light: "Switch to dark mode",
+      dark: "Switch to auto (system) mode",
+      system: "Switch to light mode",
+    };
+    btn?.setAttribute("aria-label", labels[theme]);
 
-	function nextTheme(current: Theme): Theme {
-		const cycle: Theme[] = ["light", "dark", "system"];
-		const i = cycle.indexOf(current);
-		return cycle[(i + 1) % cycle.length];
-	}
+    const status = document.getElementById("theme-current");
+    const statusLabels: Record<Theme, string> = {
+      light: "Current: light mode",
+      dark: "Current: dark mode",
+      system: "Current: system preference",
+    };
+    if (status) status.textContent = statusLabels[theme];
+  }
 
-	function initToggle() {
-		const saved = getSavedTheme();
-		updateIcons(saved);
+  function nextTheme(current: Theme): Theme {
+    const cycle: Theme[] = ["light", "dark", "system"];
+    const i = cycle.indexOf(current);
+    return cycle[(i + 1) % cycle.length];
+  }
 
-		const btn = document.getElementById("theme-toggle");
-		// Remove any previous listener by replacing the element clone
-		const fresh = btn?.cloneNode(true) as HTMLElement;
-		if (btn && fresh) {
-			btn.replaceWith(fresh);
-		}
+  function initToggle() {
+    const saved = getSavedTheme();
+    updateIcons(saved);
 
-		document.getElementById("theme-toggle")?.addEventListener("click", () => {
-			const current = getSavedTheme();
-			const next = nextTheme(current);
-			localStorage.setItem("theme", next);
-			applyTheme(next);
-			updateIcons(next);
-		});
-	}
+    const btn = document.getElementById("theme-toggle");
+    // Remove any previous listener by replacing the element clone
+    const fresh = btn?.cloneNode(true) as HTMLElement;
+    if (btn && fresh) {
+      btn.replaceWith(fresh);
+    }
 
-	initToggle();
-	document.addEventListener("astro:after-swap", initToggle);
+    document.getElementById("theme-toggle")?.addEventListener("click", () => {
+      const current = getSavedTheme();
+      const next = nextTheme(current);
+      localStorage.setItem("theme", next);
+      applyTheme(next);
+      updateIcons(next);
+    });
+  }
+
+  initToggle();
+  document.addEventListener("astro:after-swap", initToggle);
 </script>

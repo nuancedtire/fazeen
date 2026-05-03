@@ -8,42 +8,42 @@ import tailwindcss from "@tailwindcss/vite";
 const isVercel = !!process.env.VERCEL;
 
 export default defineConfig({
-	site: "https://fazeen.dev",
-	integrations: [mdx(), sitemap()],
-	adapter: isVercel
-		? undefined
-		: cloudflare({
-				platformProxy: {
-					enabled: true,
-				},
-			}),
-	vite: {
-		plugins: [tailwindcss()],
-	},
-	fonts: [
-		{
-			provider: fontProviders.fontsource(),
-			name: "Inter",
-			cssVariable: "--font-inter",
-			weights: [400, 500, 600, 700],
-			styles: ["normal"],
-			fallbacks: ["sans-serif"],
-		},
-		{
-			provider: fontProviders.fontsource(),
-			name: "Instrument Serif",
-			cssVariable: "--font-instrument-serif",
-			weights: [400],
-			styles: ["normal", "italic"],
-			fallbacks: ["serif"],
-		},
-		{
-			provider: fontProviders.fontsource(),
-			name: "JetBrains Mono",
-			cssVariable: "--font-jetbrains-mono",
-			weights: [400, 500],
-			styles: ["normal"],
-			fallbacks: ["monospace"],
-		},
-	],
+  site: "https://fazeen.dev",
+  integrations: [mdx(), sitemap()],
+  adapter: isVercel
+    ? undefined
+    : cloudflare({
+        platformProxy: {
+          enabled: true,
+        },
+      }),
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "Inter",
+      cssVariable: "--font-inter",
+      weights: [400, 500, 600, 700],
+      styles: ["normal"],
+      fallbacks: ["sans-serif"],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Instrument Serif",
+      cssVariable: "--font-instrument-serif",
+      weights: [400],
+      styles: ["normal", "italic"],
+      fallbacks: ["serif"],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "JetBrains Mono",
+      cssVariable: "--font-jetbrains-mono",
+      weights: [400, 500],
+      styles: ["normal"],
+      fallbacks: ["monospace"],
+    },
+  ],
 });

@@ -6,130 +6,139 @@ import { ClientRouter } from "astro:transitions";
 import { Font } from "astro:assets";
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from "../consts";
 
-
-
 interface Props {
-	title?: string;
-	description?: string;
-	ogImage?: string;
-	canonicalURL?: string;
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalURL?: string;
 }
 
 const {
-	title,
-	description = SITE_DESCRIPTION,
-	ogImage,
-	canonicalURL = Astro.url.href,
+  title,
+  description = SITE_DESCRIPTION,
+  ogImage,
+  canonicalURL = Astro.url.href,
 } = Astro.props;
 
 const pageTitle = title
-	? `${title} — Fazeen Nasser`
-	: "Dr Fazeen Nasser — Emergency Medicine Clinician & Clinical AI Builder";
+  ? `${title} — Fazeen Nasser`
+  : "Dr Fazeen Nasser — Emergency Medicine Clinician & Clinical AI Builder";
+
+const ogImageURL = ogImage || "/og-default.png";
 ---
 
 <!doctype html>
 <html lang="en" data-theme="dark">
-	<head>
-		<!--
+  <head>
+    <!--
 			Runs once on initial page load to set the correct theme immediately (no FOUC).
 			Also hooks astro:before-swap so the INCOMING document gets the right data-theme
 			before it's rendered — this is what prevents the flash on navigation.
 		-->
-		<script is:inline>
-			(function () {
-				function resolveTheme() {
-					const saved = localStorage.getItem("theme") || "system";
-					if (saved === "system") {
-						return window.matchMedia("(prefers-color-scheme: dark)").matches
-							? "dark"
-							: "light";
-					}
-					return saved;
-				}
+    <script is:inline>
+      (function () {
+        function resolveTheme() {
+          const saved = localStorage.getItem("theme") || "system";
+          if (saved === "system") {
+            return window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+          }
+          return saved;
+        }
 
-				// Apply on initial load
-				document.documentElement.setAttribute("data-theme", resolveTheme());
+        // Apply on initial load
+        document.documentElement.setAttribute("data-theme", resolveTheme());
 
-				// Patch incoming document before the swap so there is never a flash
-				document.addEventListener("astro:before-swap", function (e) {
-					e.newDocument.documentElement.setAttribute("data-theme", resolveTheme());
-				});
-			})();
-		</script>
+        // Patch incoming document before the swap so there is never a flash
+        document.addEventListener("astro:before-swap", function (e) {
+          e.newDocument.documentElement.setAttribute(
+            "data-theme",
+            resolveTheme(),
+          );
+        });
+      })();
+    </script>
 
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
-		
-		<!-- Fonts with preload for critical fonts -->
-		<Font cssVariable="--font-inter" preload />
-		<Font cssVariable="--font-instrument-serif" preload />
-		<Font cssVariable="--font-jetbrains-mono" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
 
-		<title>{pageTitle}</title>
-		<meta name="description" content={description} />
-		<meta name="author" content="Dr Fazeen Nasser" />
-		<link rel="canonical" href={canonicalURL} />
+    <!-- Fonts with preload for critical fonts -->
+    <Font cssVariable="--font-inter" preload />
+    <Font cssVariable="--font-instrument-serif" preload />
+    <Font cssVariable="--font-jetbrains-mono" />
 
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:title" content={pageTitle} />
-		<meta property="og:description" content={description} />
-		{ogImage && <meta property="og:image" content={new URL(ogImage, SITE_URL).toString()} />}
-		<meta property="og:site_name" content={SITE_TITLE} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Dr Fazeen Nasser" />
+    <link rel="canonical" href={canonicalURL} />
 
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={pageTitle} />
-		<meta name="twitter:description" content={description} />
-		{ogImage && <meta name="twitter:image" content={new URL(ogImage, SITE_URL).toString()} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta
+      property="og:image"
+      content={new URL(ogImageURL, SITE_URL).toString()}
+    />
+    <meta property="og:site_name" content={SITE_TITLE} />
 
-		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-		<link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image"
+      content={new URL(ogImageURL, SITE_URL).toString()}
+    />
 
-		<ClientRouter />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
-		<script type="application/ld+json" is:inline>
-			{
-				"@context": "https://schema.org",
-				"@type": "Person",
-				"name": "Fazeen Nasser",
-				"honorificPrefix": "Dr",
-				"jobTitle": "Emergency Medicine Clinician",
-				"affiliation": "Barts Health NHS Trust",
-				"url": "https://fazeen.dev",
-				"sameAs": [
-					"https://linkedin.com/in/fazeen-nasser",
-					"https://github.com/nuancedtire"
-				]
-			}
-		</script>
-	</head>
-	<body class="bg-bg text-fg">
-		<a href="#main-content" class="skip-to-content">Skip to content</a>
-		<Header />
-		<main id="main-content">
-			<slot />
-		</main>
-		<Footer />
-		</body>
+    <ClientRouter />
+
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Fazeen Nasser",
+        "honorificPrefix": "Dr",
+        "jobTitle": "Emergency Medicine Clinician",
+        "affiliation": "Barts Health NHS Trust",
+        "url": "https://fazeen.dev",
+        "sameAs": [
+          "https://linkedin.com/in/fazeen-nasser",
+          "https://github.com/nuancedtire"
+        ]
+      }
+    </script>
+  </head>
+  <body class="bg-bg text-fg">
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
 
 <script>
-	// Simple mouse tracking for project cards
-	function initMouseTracking(): void {
-		const cards = document.querySelectorAll<HTMLElement>('.project-card');
-		cards.forEach(card => {
-			card.addEventListener('mousemove', (e: MouseEvent) => {
-				const rect = card.getBoundingClientRect();
-				card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-				card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-			});
-			card.addEventListener('mouseleave', () => {
-				card.style.setProperty('--mouse-x', '50%');
-				card.style.setProperty('--mouse-y', '50%');
-			});
-		});
-	}
+  // Simple mouse tracking for project cards
+  function initMouseTracking(): void {
+    const cards = document.querySelectorAll<HTMLElement>(".project-card");
+    cards.forEach((card) => {
+      card.addEventListener("mousemove", (e: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+        card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.setProperty("--mouse-x", "50%");
+        card.style.setProperty("--mouse-y", "50%");
+      });
+    });
+  }
 
-	document.addEventListener('astro:page-load', initMouseTracking);
+  document.addEventListener("astro:page-load", initMouseTracking);
 </script>
