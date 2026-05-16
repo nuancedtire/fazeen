@@ -1,64 +1,82 @@
-# Astro Starter Kit: Blog
+# fazeen.dev
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template)
+Personal site, portfolio, and writing of **Dr Fazeen Nasser** — emergency medicine clinician at Barts Health NHS Trust and founding engineer of [Peerr.io](https://peerr.io) and [Aiigent.io](https://aiigent.io).
 
-![Astro Template Preview](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+Live at **[fazeen.dev](https://fazeen.dev)**.
 
-<!-- dash-content-start -->
+Built with [Astro](https://astro.build) and deployed on [Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/).
 
-Create a blog with Astro and deploy it on Cloudflare Workers as a [static website](https://developers.cloudflare.com/workers/static-assets/).
+## Stack
 
-Features:
+- **Framework:** Astro 6 (with MDX)
+- **Styling:** Tailwind CSS 4 + `@tailwindcss/typography`
+- **Content:** Markdown / MDX content collections (`src/content/work`)
+- **Hosting:** Cloudflare Workers via `@astrojs/cloudflare`
+- **Extras:** Sitemap, RSS feed, OpenGraph metadata, observability logging
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-- ✅ Built-in Observability logging
+## Project Structure
 
-<!-- dash-content-end -->
-
-## Getting Started
-
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
-
-```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/astro-blog-starter-template
+```
+├── public/                 # Static assets (favicons, images, og cards)
+├── src/
+│   ├── components/         # Reusable Astro components
+│   ├── content/work/       # Case-study / project MDX entries
+│   ├── layouts/            # Page layouts
+│   ├── pages/              # Routes — index, about, cv, now, contact, work
+│   ├── styles/             # Global styles
+│   ├── consts.ts           # Site title, description, URL
+│   └── content.config.ts   # Content collection schemas
+├── astro.config.mjs
+├── wrangler.json           # Cloudflare Workers config
+└── package.json
 ```
 
-A live public deployment of this template is available at [https://astro-blog-starter-template.templates.workers.dev](https://astro-blog-starter-template.templates.workers.dev)
+Pages map directly from `src/pages/`. The `work/` collection drives the portfolio at `/work` and individual case studies at `/work/[slug]`.
 
-## 🚀 Project Structure
+## Local Development
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Requires **Node.js ≥ 22**.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```bash
+npm install
+npm run dev          # http://localhost:4321
+```
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+## Commands
 
-Any static assets, like images, can be placed in the `public/` directory.
+| Command                  | Action                                                        |
+| :----------------------- | :------------------------------------------------------------ |
+| `npm install`            | Install dependencies                                          |
+| `npm run dev`            | Start the local dev server                                    |
+| `npm run build`          | Build the production site to `./dist/`                        |
+| `npm run preview`        | Build then run locally with `wrangler dev` (Workers runtime)  |
+| `npm run check`          | Build + `tsc` + `wrangler deploy --dry-run` (CI sanity check) |
+| `npm run deploy`         | Deploy to Cloudflare Workers                                  |
+| `npm run cf-typegen`     | Regenerate Cloudflare binding types                           |
+| `npm run astro -- --help`| Astro CLI help                                                |
 
-## 🧞 Commands
+## Adding a Project / Case Study
 
-All commands are run from the root of the project, from a terminal:
+Drop a new `.mdx` file in `src/content/work/` matching the schema in `src/content.config.ts`. It will be auto-routed to `/work/<slug>`.
 
-| Command                           | Action                                           |
-| :-------------------------------- | :----------------------------------------------- |
-| `npm install`                     | Installs dependencies                            |
-| `npm run dev`                     | Starts local dev server at `localhost:4321`      |
-| `npm run build`                   | Build your production site to `./dist/`          |
-| `npm run preview`                 | Preview your build locally, before deploying     |
-| `npm run astro ...`               | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help`         | Get help using the Astro CLI                     |
-| `npm run build && npm run deploy` | Deploy your production site to Cloudflare        |
-| `npm wrangler tail`               | View real-time logs for all Workers              |
+## Deployment
 
-## 👀 Want to learn more?
+Production deploys go to Cloudflare Workers:
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```bash
+npm run build && npm run deploy
+```
+
+View live logs:
+
+```bash
+npx wrangler tail
+```
 
 ## Credit
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Scaffolded from the [Astro blog starter](https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template) (itself based on [Bear Blog](https://github.com/HermanMartinus/bearblog/)). Heavily customised since.
+
+## License
+
+Content (writing, case studies, images) © Fazeen Nasser. Source code available for reference; please ask before reusing wholesale.
